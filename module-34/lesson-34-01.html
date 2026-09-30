@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 34.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 34</div>
+        <div style="font-size: 12px; color: #666;">Score Reading</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 34.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Orchestral and Band Notation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 40 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 34.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Reading the Full Score: Orchestral and Band Notation</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">When an orchestra plays the same note, why does a trumpet sound a whole step higher than what the flute reads?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A full orchestral score looks overwhelming at first. Dozens of staves, strange instrument names, and the same pitch appearing in different places on different lines. Once you understand how the score is organized and why some instruments are called transposing instruments, the whole layout clicks into place. This lesson gives you that framework.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the top-to-bottom order of instrument families in a full score (woodwinds, brass, percussion, strings).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what a transposing instrument is and give the written-vs-concert-pitch difference for B&flat; trumpet, B&flat; clarinet, and F horn.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe the three main musical texture types: monophony, homophony, and polyphony.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Open Music Theory v2 at viva.pressbooks.pub/openmusictheory: skim <em>Core Principles of Orchestration</em> (around p. 747) and <em>Texture</em> (around p. 194).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Music Theory notebook (digital or paper) and a pencil.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Headphones for the listening links later in this lesson.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1: SCORE LAYOUT ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; HOW A FULL SCORE IS ORGANIZED</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">A <strong>full score</strong> (also called a conductor's score) shows every instrument on its own staff, all aligned vertically so that notes happening at the same moment are lined up in the same column. The conductor can see the entire ensemble on a single page. The order of staves on the page follows a standard convention: <strong>woodwinds on top, then brass, then percussion, then strings at the bottom.</strong></p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Within each family, instruments are ordered roughly from highest to lowest pitch. So in the woodwind group you might see: piccolo, flute, oboe, clarinet, bassoon. In the string group: violin I, violin II, viola, cello, double bass.</p>
+
+        <!-- VISUAL: Mini full-score layout diagram -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #6B4C9A; text-align: center; margin-bottom: 12px; font-weight: 600;">FULL SCORE LAYOUT (top to bottom)</div>
+          <svg viewBox="0 0 700 420" width="100%" style="max-width:700px; display:block; margin:0 auto;" role="img" aria-label="A diagram showing a full orchestral score layout from top to bottom: Woodwinds at the top, then Brass, then Percussion, then Strings at the bottom. Each section shows example instruments stacked in order from highest to lowest pitch.">
+            <!-- Woodwinds block -->
+            <rect x="10" y="10" width="200" height="120" rx="6" fill="#E7F4EC" stroke="#2A9D5C" stroke-width="2"/>
+            <text x="110" y="32" text-anchor="middle" font-size="14" font-weight="bold" fill="#1A6B3C">WOODWINDS</text>
+            <text x="110" y="52" text-anchor="middle" font-size="12" fill="#1a2340">Piccolo / Flute</text>
+            <text x="110" y="68" text-anchor="middle" font-size="12" fill="#1a2340">Oboe / English Horn</text>
+            <text x="110" y="84" text-anchor="middle" font-size="12" fill="#1a2340">Clarinet in B&#9837;</text>
+            <text x="110" y="100" text-anchor="middle" font-size="12" fill="#1a2340">Bassoon / Contrabassoon</text>
+            <text x="110" y="120" text-anchor="middle" font-size="11" fill="#6B4C9A">(highest pitch at top)</text>
+            <!-- Arrow 1 -->
+            <line x1="110" y1="132" x2="110" y2="148" stroke="#0E1C42" stroke-width="2" marker-end="url(#arr)"/>
+            <!-- Brass block -->
+            <rect x="10" y="150" width="200" height="100" rx="6" fill="#EEF1F8" stroke="#0E1C42" stroke-width="2"/>
+            <text x="110" y="172" text-anchor="middle" font-size="14" font-weight="bold" fill="#0E1C42">BRASS</text>
+            <text x="110" y="192" text-anchor="middle" font-size="12" fill="#1a2340">French Horn in F</text>
+            <text x="110" y="208" text-anchor="middle" font-size="12" fill="#1a2340">Trumpet in B&#9837;</text>
+            <text x="110" y="224" text-anchor="middle" font-size="12" fill="#1a2340">Trombone / Tuba</text>
+            <text x="110" y="242" text-anchor="middle" font-size="11" fill="#6B4C9A">(horn traditionally first)</text>
+            <!-- Arrow 2 -->
+            <line x1="110" y1="252" x2="110" y2="268" stroke="#0E1C42" stroke-width="2" marker-end="url(#arr)"/>
+            <!-- Percussion block -->
+            <rect x="10" y="270" width="200" height="60" rx="6" fill="#FFF8EC" stroke="#E8A020" stroke-width="2"/>
+            <text x="110" y="292" text-anchor="middle" font-size="14" font-weight="bold" fill="#9A6000">PERCUSSION</text>
+            <text x="110" y="312" text-anchor="middle" font-size="12" fill="#1a2340">Timpani / Snare / Cymbals / etc.</text>
+            <text x="110" y="328" text-anchor="middle" font-size="11" fill="#6B4C9A">(pitched, then unpitched)</text>
+            <!-- Arrow 3 -->
+            <line x1="110" y1="332" x2="110" y2="348" stroke="#0E1C42" stroke-width="2" marker-end="url(#arr)"/>
+            <!-- Strings block -->
+            <rect x="10" y="350" width="200" height="60" rx="6" fill="#EFEAF6" stroke="#6B4C9A" stroke-width="2"/>
+            <text x="110" y="372" text-anchor="middle" font-size="14" font-weight="bold" fill="#6B4C9A">STRINGS</text>
+            <text x="110" y="392" text-anchor="middle" font-size="12" fill="#1a2340">Violin I, Violin II, Viola</text>
+            <text x="110" y="408" text-anchor="middle" font-size="12" fill="#1a2340">Cello, Double Bass</text>
+            <!-- Conductor score mock on right -->
+            <rect x="250" y="10" width="440" height="400" rx="6" fill="#FCFCFD" stroke="#D0D9E8" stroke-width="1.5"/>
+            <text x="470" y="32" text-anchor="middle" font-size="13" font-weight="bold" fill="#0E1C42">Sample Score Page (one measure shown)</text>
+            <!-- staff lines for each instrument group -->
+            <!-- Woodwind staves (3) -->
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="280" y1="55" x2="680" y2="55"/><line x1="280" y1="62" x2="680" y2="62"/><line x1="280" y1="69" x2="680" y2="69"/><line x1="280" y1="76" x2="680" y2="76"/><line x1="280" y1="83" x2="680" y2="83"/>
+              <line x1="280" y1="95" x2="680" y2="95"/><line x1="280" y1="102" x2="680" y2="102"/><line x1="280" y1="109" x2="680" y2="109"/><line x1="280" y1="116" x2="680" y2="116"/><line x1="280" y1="123" x2="680" y2="123"/>
+            </g>
+            <text x="273" y="72" text-anchor="end" font-size="10" fill="#1A6B3C">Flute</text>
+            <text x="273" y="112" text-anchor="end" font-size="10" fill="#1A6B3C">Cl. B&#9837;</text>
+            <!-- Brass staves (2) -->
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="280" y1="145" x2="680" y2="145"/><line x1="280" y1="152" x2="680" y2="152"/><line x1="280" y1="159" x2="680" y2="159"/><line x1="280" y1="166" x2="680" y2="166"/><line x1="280" y1="173" x2="680" y2="173"/>
+              <line x1="280" y1="185" x2="680" y2="185"/><line x1="280" y1="192" x2="680" y2="192"/><line x1="280" y1="199" x2="680" y2="199"/><line x1="280" y1="206" x2="680" y2="206"/><line x1="280" y1="213" x2="680" y2="213"/>
+            </g>
+            <text x="273" y="162" text-anchor="end" font-size="10" fill="#0E1C42">Hn. F</text>
+            <text x="273" y="202" text-anchor="end" font-size="10" fill="#0E1C42">Tpt. B&#9837;</text>
+            <!-- Perc staff -->
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="280" y1="235" x2="680" y2="235"/><line x1="280" y1="242" x2="680" y2="242"/><line x1="280" y1="249" x2="680" y2="249"/><line x1="280" y1="256" x2="680" y2="256"/><line x1="280" y1="263" x2="680" y2="263"/>
+            </g>
+            <text x="273" y="253" text-anchor="end" font-size="10" fill="#9A6000">Timp.</text>
+            <!-- String staves (2) -->
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="280" y1="295" x2="680" y2="295"/><line x1="280" y1="302" x2="680" y2="302"/><line x1="280" y1="309" x2="680" y2="309"/><line x1="280" y1="316" x2="680" y2="316"/><line x1="280" y1="323" x2="680" y2="323"/>
+              <line x1="280" y1="335" x2="680" y2="335"/><line x1="280" y1="342" x2="680" y2="342"/><line x1="280" y1="349" x2="680" y2="349"/><line x1="280" y1="356" x2="680" y2="356"/><line x1="280" y1="363" x2="680" y2="363"/>
+            </g>
+            <text x="273" y="312" text-anchor="end" font-size="10" fill="#6B4C9A">Vln. I</text>
+            <text x="273" y="352" text-anchor="end" font-size="10" fill="#6B4C9A">Cello</text>
+            <!-- Vertical barline -->
+            <line x1="680" y1="55" x2="680" y2="363" stroke="#0E1C42" stroke-width="2"/>
+            <line x1="280" y1="55" x2="280" y2="363" stroke="#0E1C42" stroke-width="2"/>
+            <!-- Family bracket labels -->
+            <line x1="265" y1="55" x2="265" y2="123" stroke="#1A6B3C" stroke-width="3"/>
+            <text x="258" y="92" text-anchor="end" font-size="10" fill="#1A6B3C" transform="rotate(-90,258,92)">WW</text>
+            <line x1="265" y1="145" x2="265" y2="213" stroke="#0E1C42" stroke-width="3"/>
+            <text x="258" y="182" text-anchor="end" font-size="10" fill="#0E1C42" transform="rotate(-90,258,182)">BR</text>
+            <line x1="265" y1="235" x2="265" y2="263" stroke="#9A6000" stroke-width="3"/>
+            <line x1="265" y1="295" x2="265" y2="363" stroke="#6B4C9A" stroke-width="3"/>
+            <!-- Arrowhead marker def -->
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#0E1C42"/>
+              </marker>
+            </defs>
+          </svg>
+          <div style="font-size:15px; color:#666; margin-top:8px; text-align:center;">Every beat reads vertically. All staves at the same horizontal position sound at the same moment.</div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">A <strong>concert score</strong> shows all instruments at concert pitch. A <strong>transposing score</strong> (the older, more common format) writes each transposing instrument in its own key. When you read an orchestral score from IMSLP, most pre-20th-century pieces use transposing notation.</p>
+    </div>
+
+    <!-- ===================== PART 2: TRANSPOSING INSTRUMENTS ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 2 &middot; TRANSPOSING INSTRUMENTS: WRITTEN vs. CONCERT PITCH</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">A <strong>transposing instrument</strong> is one whose written pitch does not match its sounding (concert) pitch. The instrument's name tells you its transposition. A <strong>B&flat; instrument</strong> (like a B&flat; trumpet or B&flat; clarinet) sounds a <strong>whole step lower</strong> than written. An <strong>F instrument</strong> (like a French horn in F) sounds a <strong>perfect fifth lower</strong> than written.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Why do transposing instruments exist? Historically, early brass instruments could only play in one key naturally. Composers began writing for them in a way that let the player use the same fingerings regardless of which instrument they played. That convention survived even after modern valves made key changes easy.</p>
+
+        <!-- VISUAL: Concert-vs-written transposing-instrument chart -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #6B4C9A; text-align:center; margin-bottom:14px; font-weight:600;">WRITTEN NOTE C vs. CONCERT PITCH SOUNDED</div>
+          <svg viewBox="0 0 700 220" width="100%" style="max-width:700px; display:block; margin:0 auto;" role="img" aria-label="Three panels showing that when a transposing instrument reads C, the concert pitch it produces differs by instrument. B-flat clarinet and B-flat trumpet read C but sound B-flat. F horn reads C but sounds F a fifth lower. Non-transposing instruments like flute read and sound C.">
+            <!-- Panel 1: Bb instruments -->
+            <rect x="10" y="10" width="215" height="200" rx="6" fill="#E7F4EC" stroke="#2A9D5C" stroke-width="1.5"/>
+            <text x="117" y="30" text-anchor="middle" font-size="13" font-weight="bold" fill="#1A6B3C">B&#9837; Instruments</text>
+            <text x="117" y="46" text-anchor="middle" font-size="11" fill="#1a2340">(Clarinet in B&#9837;, Trumpet in B&#9837;)</text>
+            <!-- mini staff -->
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="30" y1="75" x2="130" y2="75"/><line x1="30" y1="82" x2="130" y2="82"/><line x1="30" y1="89" x2="130" y2="89"/><line x1="30" y1="96" x2="130" y2="96"/><line x1="30" y1="103" x2="130" y2="103"/>
+            </g>
+            <!-- Written C = C5, the third space (just above the middle line) -->
+            <ellipse cx="90" cy="85" rx="7" ry="5" fill="#1A6B3C"/>
+            <line x1="97" y1="85" x2="97" y2="60" stroke="#1A6B3C" stroke-width="1.5"/>
+            <text x="100" y="72" font-size="10" fill="#1A6B3C">Written C</text>
+            <!-- arrow -->
+            <text x="117" y="125" text-anchor="middle" font-size="20" fill="#0E1C42">&#8595;</text>
+            <text x="117" y="145" text-anchor="middle" font-size="11" fill="#0E1C42">Sounds a whole step (M2) lower</text>
+            <!-- mini staff for concert pitch -->
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="30" y1="158" x2="130" y2="158"/><line x1="30" y1="165" x2="130" y2="165"/><line x1="30" y1="172" x2="130" y2="172"/><line x1="30" y1="179" x2="130" y2="179"/><line x1="30" y1="186" x2="130" y2="186"/>
+            </g>
+            <!-- Bb notehead on second space from bottom = space between line 2 and line 3 = y 168+7=175, but Bb is below the staff: ledger not needed, it's on space 3 from top roughly -->
+            <ellipse cx="90" cy="172" rx="7" ry="5" fill="#6B4C9A"/>
+            <text x="60" y="172" text-anchor="middle" font-size="11" fill="#6B4C9A">&#9837;</text>
+            <line x1="97" y1="172" x2="97" y2="147" stroke="#6B4C9A" stroke-width="1.5"/>
+            <text x="100" y="158" font-size="10" fill="#6B4C9A">Concert B&#9837;</text>
+            <!-- Panel 2: F instruments -->
+            <rect x="243" y="10" width="215" height="200" rx="6" fill="#EEF1F8" stroke="#0E1C42" stroke-width="1.5"/>
+            <text x="350" y="30" text-anchor="middle" font-size="13" font-weight="bold" fill="#0E1C42">F Instruments</text>
+            <text x="350" y="46" text-anchor="middle" font-size="11" fill="#1a2340">(French Horn in F)</text>
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="263" y1="75" x2="363" y2="75"/><line x1="263" y1="82" x2="363" y2="82"/><line x1="263" y1="89" x2="363" y2="89"/><line x1="263" y1="96" x2="363" y2="96"/><line x1="263" y1="103" x2="363" y2="103"/>
+            </g>
+            <!-- Written C = C5, the third space -->
+            <ellipse cx="323" cy="85" rx="7" ry="5" fill="#0E1C42"/>
+            <line x1="330" y1="85" x2="330" y2="60" stroke="#0E1C42" stroke-width="1.5"/>
+            <text x="333" y="72" font-size="10" fill="#0E1C42">Written C</text>
+            <text x="350" y="125" text-anchor="middle" font-size="20" fill="#0E1C42">&#8595;</text>
+            <text x="350" y="145" text-anchor="middle" font-size="11" fill="#0E1C42">Sounds a perfect 5th lower</text>
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="263" y1="158" x2="363" y2="158"/><line x1="263" y1="165" x2="363" y2="165"/><line x1="263" y1="172" x2="363" y2="172"/><line x1="263" y1="179" x2="363" y2="179"/><line x1="263" y1="186" x2="363" y2="186"/>
+            </g>
+            <!-- Concert F = F4, the bottom space (a perfect fifth below written C5) -->
+            <ellipse cx="323" cy="183" rx="7" ry="5" fill="#6B4C9A"/>
+            <line x1="330" y1="183" x2="330" y2="158" stroke="#6B4C9A" stroke-width="1.5"/>
+            <text x="333" y="171" font-size="10" fill="#6B4C9A">Concert F</text>
+            <!-- Panel 3: C (non-transposing) -->
+            <rect x="476" y="10" width="215" height="200" rx="6" fill="#EFEAF6" stroke="#6B4C9A" stroke-width="1.5"/>
+            <text x="583" y="30" text-anchor="middle" font-size="13" font-weight="bold" fill="#6B4C9A">C Instruments</text>
+            <text x="583" y="46" text-anchor="middle" font-size="11" fill="#1a2340">(Flute, Oboe, Strings&hellip;)</text>
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="496" y1="75" x2="596" y2="75"/><line x1="496" y1="82" x2="596" y2="82"/><line x1="496" y1="89" x2="596" y2="89"/><line x1="496" y1="96" x2="596" y2="96"/><line x1="496" y1="103" x2="596" y2="103"/>
+            </g>
+            <!-- Written C = C5, the third space -->
+            <ellipse cx="556" cy="85" rx="7" ry="5" fill="#6B4C9A"/>
+            <line x1="563" y1="85" x2="563" y2="60" stroke="#6B4C9A" stroke-width="1.5"/>
+            <text x="566" y="72" font-size="10" fill="#6B4C9A">Written C</text>
+            <text x="583" y="125" text-anchor="middle" font-size="20" fill="#0E1C42">=</text>
+            <text x="583" y="145" text-anchor="middle" font-size="11" fill="#0E1C42">Sounds exactly C (no change)</text>
+            <g stroke="#555" stroke-width="0.8">
+              <line x1="496" y1="158" x2="596" y2="158"/><line x1="496" y1="165" x2="596" y2="165"/><line x1="496" y1="172" x2="596" y2="172"/><line x1="496" y1="179" x2="596" y2="179"/><line x1="496" y1="186" x2="596" y2="186"/>
+            </g>
+            <!-- Concert C = C5, the third space (same height as written C: no transposition) -->
+            <ellipse cx="556" cy="168" rx="7" ry="5" fill="#2A9D5C"/>
+            <line x1="563" y1="168" x2="563" y2="143" stroke="#2A9D5C" stroke-width="1.5"/>
+            <text x="566" y="155" font-size="10" fill="#2A9D5C">Concert C</text>
+          </svg>
+          <div style="font-size:15px; color:#666; margin-top:8px; text-align:center;">When the score shows C for a B&#9837; trumpet, the actual pitch the audience hears is B&#9837;. The conductor must mentally transpose to know what concert pitch is playing.</div>
+        </div>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-top: 3px solid #1A6B3C; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#128161; QUICK RULE</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">To convert written pitch to concert pitch: <strong>B&flat; instruments: subtract a whole step.</strong> So written D sounds as C. <strong>F horn: subtract a perfect fifth.</strong> So written G sounds as C. Memorize these two; they cover the most common transpositions in band and orchestra.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 3: TEXTURE ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127926; PART 3 &middot; MUSICAL TEXTURE: MONOPHONY, HOMOPHONY, POLYPHONY</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Texture</strong> describes how many melodic lines are present in a piece and how they relate to each other. When you scan a full score, texture is the first thing you can see: are all the staves playing the same rhythm, or is each one doing something independent? There are three main texture types.</p>
+
+        <!-- VISUAL: Three-panel texture diagram -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #6B4C9A; text-align:center; margin-bottom:14px; font-weight:600;">THE THREE TEXTURE TYPES</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+
+            <!-- Monophony -->
+            <div style="border: 2px solid #2A9D5C; border-radius: 8px; padding: 14px; background: #E7F4EC;">
+              <div style="font-size: 16px; font-weight: bold; color: #1A6B3C; margin-bottom: 6px; text-align: center;">MONOPHONY</div>
+              <svg viewBox="0 0 180 80" width="100%" style="display:block; margin:0 auto 8px;" aria-label="One single horizontal line representing one melody with no accompaniment.">
+                <line x1="10" y1="40" x2="170" y2="40" stroke="#1A6B3C" stroke-width="3" stroke-dasharray="6 3"/>
+                <text x="90" y="65" text-anchor="middle" font-size="11" fill="#1A6B3C">One melody line</text>
+              </svg>
+              <div style="font-size: 15px; color: #1a2340; line-height: 1.5;">A single unaccompanied melody. No harmony, no chords. Example: a solo voice chanting a Gregorian melody.</div>
+            </div>
+
+            <!-- Homophony -->
+            <div style="border: 2px solid #0E1C42; border-radius: 8px; padding: 14px; background: #EEF1F8;">
+              <div style="font-size: 16px; font-weight: bold; color: #0E1C42; margin-bottom: 6px; text-align: center;">HOMOPHONY</div>
+              <svg viewBox="0 0 180 80" width="100%" style="display:block; margin:0 auto 8px;" aria-label="One prominent melody line on top, with two lighter supporting lines below moving in similar rhythm, representing melody plus accompaniment.">
+                <line x1="10" y1="25" x2="170" y2="25" stroke="#0E1C42" stroke-width="3" stroke-dasharray="6 3"/>
+                <line x1="10" y1="45" x2="170" y2="45" stroke="#8A6FBF" stroke-width="1.5" stroke-dasharray="4 4"/>
+                <line x1="10" y1="60" x2="170" y2="60" stroke="#8A6FBF" stroke-width="1.5" stroke-dasharray="4 4"/>
+                <text x="90" y="78" text-anchor="middle" font-size="11" fill="#0E1C42">Melody + accompaniment</text>
+              </svg>
+              <div style="font-size: 15px; color: #1a2340; line-height: 1.5;">One main melody with supporting harmony or chords. Most pop songs and hymns use this texture.</div>
+            </div>
+
+            <!-- Polyphony -->
+            <div style="border: 2px solid #6B4C9A; border-radius: 8px; padding: 14px; background: #EFEAF6;">
+              <div style="font-size: 16px; font-weight: bold; color: #6B4C9A; margin-bottom: 6px; text-align: center;">POLYPHONY</div>
+              <svg viewBox="0 0 180 80" width="100%" style="display:block; margin:0 auto 8px;" aria-label="Three independent wavy lines crossing at different heights, representing multiple independent melodic lines moving at different rhythms.">
+                <path d="M10,30 Q45,15 90,35 Q135,55 170,25" fill="none" stroke="#6B4C9A" stroke-width="2.5"/>
+                <path d="M10,50 Q45,65 90,40 Q135,20 170,55" fill="none" stroke="#6B4C9A" stroke-width="2.5" stroke-dasharray="5 3"/>
+                <path d="M10,40 Q60,25 90,55 Q120,65 170,38" fill="none" stroke="#6B4C9A" stroke-width="1.5" stroke-dasharray="2 3"/>
+                <text x="90" y="78" text-anchor="middle" font-size="11" fill="#6B4C9A">Independent lines</text>
+              </svg>
+              <div style="font-size: 15px; color: #1a2340; line-height: 1.5;">Two or more independent melodic lines played simultaneously, each with its own rhythm and contour. Bach fugues are a classic example.</div>
+            </div>
+
+          </div>
+          <div style="font-size:15px; color:#666; margin-top:10px; text-align:center;">In a score, texture is visible: monophony = one active staff. Homophony = one staff carries the tune while others fill chords. Polyphony = multiple staves weaving different melodic shapes at once.</div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">A single piece can shift texture. A choir might open in unison (monophony), move to a choral hymn (homophony), and then break into a fugal section (polyphony). Recognizing those shifts is part of what a score-reader or arranger does.</p>
+
+        <!-- LISTENING -->
+        <div style="background: #EFEAF6; border-left: 5px solid #6B4C9A; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 8px;">&#127925; OPTIONAL LISTENING (no login required)</div>
+            <div style="font-size: 16px; color: #0E1C42; line-height: 1.6; margin-bottom: 8px;">Hear all three textures back-to-back by searching these public YouTube titles:</div>
+            <ul style="font-size: 16px; color: #1a2340; line-height: 1.8; margin: 0; padding-left: 22px;">
+                <li><strong>Monophony:</strong> Search "Gregorian Chant Kyrie Eleison" (single vocal line, no harmony).</li>
+                <li><strong>Homophony:</strong> Search "Beethoven Ode to Joy orchestra" (prominent melody + accompaniment layers).</li>
+                <li><strong>Polyphony:</strong> Search "Bach Invention No. 1 in C major" (two independent melodic voices weaving).</li>
+            </ul>
+            <div style="font-size: 16px; color: #1a2340; margin-top: 8px;">In your notebook: jot one specific thing you hear that signals each texture type.</div>
+        </div>
+    </div>
+
+    <!-- ===================== WIDGET: ow-flip (Texture) ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 14px;">&#9889; CHECK YOUR UNDERSTANDING</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 12px 0;">In your notebook, predict the texture for each example below. Then tap the card to check.</p>
+
+        <div class="flip-grid">
+          <div class="optima-widget" style="margin:0;">
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:16px;color:#0E1C42;">A solo flute plays an unaccompanied melody. What texture is this?<br><span style="font-size:15px;color:#666;">(tap to check)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.55;"><span style="color:#1A6B3C;font-weight:bold;">Monophony.</span> One voice, no accompaniment.</div>
+            </div>
+            <button class="widget-reset">Reset</button>
+          </div>
+          <div class="optima-widget" style="margin:0;">
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:16px;color:#0E1C42;">A guitar strums chords while a vocalist sings the melody. What texture?<br><span style="font-size:15px;color:#666;">(tap to check)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.55;"><span style="color:#0E1C42;font-weight:bold;">Homophony.</span> Melody on top, chordal accompaniment below.</div>
+            </div>
+            <button class="widget-reset">Reset</button>
+          </div>
+          <div class="optima-widget" style="margin:0;">
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:16px;color:#0E1C42;">Two violins play different melodies at different rhythms simultaneously. What texture?<br><span style="font-size:15px;color:#666;">(tap to check)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.55;"><span style="color:#6B4C9A;font-weight:bold;">Polyphony.</span> Two independent melodic lines, each doing its own thing.</div>
+            </div>
+            <button class="widget-reset">Reset</button>
+          </div>
+          <div class="optima-widget" style="margin:0;">
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:16px;color:#0E1C42;">A B&flat; trumpet reads a written D in the score. What concert pitch does the audience hear?<br><span style="font-size:15px;color:#666;">(tap to check)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.55;"><span style="color:#1A6B3C;font-weight:bold;">Concert C.</span> B&flat; trumpet sounds a whole step lower: written D &rarr; concert C.</div>
+            </div>
+            <button class="widget-reset">Reset</button>
+          </div>
+        </div>
+    </div>
+
+    <!-- ===================== WIDGET: ow-reflect ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div class="optima-widget ow-reflect" style="margin:0;">
+          <div class="widget-kicker">&#9889; QUICK CHECK-IN &middot; SCORE READING SO FAR</div>
+          <div class="widget-question">After reading about score layout and transposing instruments, which part feels clearest to you right now?</div>
+          <div class="widget-options">
+            <button data-response="The top-to-bottom order (woodwinds / brass / percussion / strings) is a strong foundation. You can orient yourself the moment you open any orchestral score.">The top-to-bottom family order makes sense to me.</button>
+            <button data-response="Good. The key insight: B-flat instruments sound a whole step lower than written, F horn sounds a fifth lower. Hold onto those two numbers.">I understand that Bb instruments sound lower than written.</button>
+            <button data-response="That is the hardest part for most people. Focus on the rule: a Bb instrument sounds a whole step lower than written. Test yourself on one note: if the trumpet reads E, the concert pitch is D. Try a few more until it clicks.">The concert-vs-written pitch conversion still confuses me.</button>
+            <button data-response="All three textures are worth remembering for composition too: when you write your own piece, you will be choosing a texture whether or not you name it.">I can picture the difference between monophony, homophony, and polyphony.</button>
+          </div>
+          <div class="widget-feedback"></div>
+          <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Score-Reading Skill Item (Canvas Assignment)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Open the linked public-domain score on IMSLP. Identify the instrument families, locate a transposing instrument, and label the texture of the opening passage. Submit a short written response.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 34 Check (Canvas quiz)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short auto-graded quiz on score layout, transposing instruments, and texture types. You may retake it to review.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A full score is a map: <strong>woodwinds, brass, percussion, strings</strong>, top to bottom. Transposing instruments play differently from what they read: <strong>B&flat; instruments sound a whole step lower, F horn sounds a fifth lower.</strong> And every piece has a texture: one line (monophony), melody-plus-chords (homophony), or independent melodies weaving together (polyphony). These three ideas unlock any score you pick up.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 34.01 &middot; Orchestral and Band Notation</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

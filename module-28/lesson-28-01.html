@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 28.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 28</div>
+        <div style="font-size: 12px; color: #666;">Pentatonic Scales</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 28.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Pentatonic Scales: The Five-Note Scale</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 35 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 28.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Pentatonic Scales: The Five-Note Scale</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- HOOK / Focus Box (green top border) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Why do so many musical traditions around the world, separated by thousands of miles, arrive at the same five-note scale?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">From Scottish bagpipes to West African kora to blues guitar, five particular notes keep showing up together. That is not a coincidence. Today you will find out exactly which five notes they are, why they work so well together, and how to use them to create your own melody.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> identify the notes of the major and minor pentatonic scales by their scale degrees.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why pentatonic scales have no strong tension or pull.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> create a short pentatonic melody.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; WHAT IS A PENTATONIC SCALE?</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Pentatonic</strong> means five notes: <em>penta</em> = five; <em>tonic</em> = tone. There are two main types used across Western and world music: the <strong>major pentatonic</strong> and the <strong>minor pentatonic</strong>.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The <strong>major pentatonic</strong> uses scale degrees 1, 2, 3, 5, and 6. That means you take a regular major scale and remove the 4th and the 7th. In the key of C, that gives you: C, D, E, G, A.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The <strong>minor pentatonic</strong> uses scale degrees 1, flat&#8209;3, 4, 5, and flat&#8209;7. In the key of A, that gives you: A, C, D, E, G.</p>
+
+        <!-- Quick reference: two scale types side by side -->
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px;">
+            <div style="flex: 1; min-width: 200px; border-left: 4px solid #BFE3CC; background: #E7F4EC; border-radius: 0 6px 6px 0; padding: 10px 14px;">
+                <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 4px; font-weight: bold;">MAJOR PENTATONIC</div>
+                <div style="font-size: 16px; color: #0E1C42;">Degrees: 1-2-3-5-6</div>
+                <div style="font-size: 16px; color: #1a2340;">In C: C, D, E, G, A</div>
+            </div>
+            <div style="flex: 1; min-width: 200px; border-left: 4px solid #D9CEEC; background: #EFEAF6; border-radius: 0 6px 6px 0; padding: 10px 14px;">
+                <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 4px; font-weight: bold;">MINOR PENTATONIC</div>
+                <div style="font-size: 16px; color: #0E1C42;">Degrees: 1-flat&#8209;3-4-5-flat&#8209;7</div>
+                <div style="font-size: 16px; color: #1a2340;">In A: A, C, D, E, G</div>
+            </div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Here is the key idea: removing the 4th and the 7th removes the two "pull" notes in a major scale. The 7th wants to resolve up to the tonic; the 4th wants to resolve down. Without those two pull tones, the scale feels open and free, with no strong tension to resolve.</p>
+
+        <!-- VISUAL: Keyboard diagram showing C major pentatonic -->
+        <div style="background: #FCFCFD; border: 1px solid #E2E7F0; border-radius: 8px; padding: 16px; margin: 6px 0 4px;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.4px;">C Major Pentatonic: Notes on the Keyboard</div>
+            <div style="overflow-x: auto;">
+            <svg viewBox="0 0 600 220" width="100%" style="max-width:600px; min-width:320px;" role="img" aria-label="One octave piano keyboard from C to C. The five C major pentatonic notes C, D, E, G, A are highlighted in green. The removed notes F and B are shown in grey with labels.">
+                <!-- White keys: C D E F G A B C at positions 0..7 -->
+                <!-- Each white key: width=60, height=150, starting x=30 -->
+                <g stroke="#0E1C42" stroke-width="1.5">
+                    <!-- C -->
+                    <rect x="30"  y="30" width="60" height="150" fill="#2A9D5C"/>
+                    <!-- D -->
+                    <rect x="90"  y="30" width="60" height="150" fill="#2A9D5C"/>
+                    <!-- E -->
+                    <rect x="150" y="30" width="60" height="150" fill="#2A9D5C"/>
+                    <!-- F (removed: 4th) -->
+                    <rect x="210" y="30" width="60" height="150" fill="#C8D0DC"/>
+                    <!-- G -->
+                    <rect x="270" y="30" width="60" height="150" fill="#2A9D5C"/>
+                    <!-- A -->
+                    <rect x="330" y="30" width="60" height="150" fill="#2A9D5C"/>
+                    <!-- B (removed: 7th) -->
+                    <rect x="390" y="30" width="60" height="150" fill="#C8D0DC"/>
+                    <!-- C (octave) -->
+                    <rect x="450" y="30" width="60" height="150" fill="#2A9D5C"/>
+                </g>
+                <!-- Black keys: C#, D#, F#, G#, A# -->
+                <g fill="#0E1C42" stroke="#0E1C42" stroke-width="1">
+                    <rect x="75"  y="30" width="34" height="95"/>
+                    <rect x="135" y="30" width="34" height="95"/>
+                    <rect x="255" y="30" width="34" height="95"/>
+                    <rect x="315" y="30" width="34" height="95"/>
+                    <rect x="375" y="30" width="34" height="95"/>
+                </g>
+                <!-- White key labels -->
+                <g font-size="15" text-anchor="middle" font-weight="bold">
+                    <text x="60"  y="168" fill="#FFFFFF">C</text>
+                    <text x="120" y="168" fill="#FFFFFF">D</text>
+                    <text x="180" y="168" fill="#FFFFFF">E</text>
+                    <text x="240" y="168" fill="#6b7a99">F</text>
+                    <text x="300" y="168" fill="#FFFFFF">G</text>
+                    <text x="360" y="168" fill="#FFFFFF">A</text>
+                    <text x="420" y="168" fill="#6b7a99">B</text>
+                    <text x="480" y="168" fill="#FFFFFF">C</text>
+                </g>
+                <!-- Small "removed" labels above F and B -->
+                <g font-size="10" fill="#8a1f16" text-anchor="middle" font-style="italic">
+                    <text x="240" y="22">removed</text>
+                    <text x="420" y="22">removed</text>
+                </g>
+            </svg>
+            </div>
+            <!-- Explanation panel below keyboard -->
+            <div style="background: #E7F4EC; border-left: 4px solid #1A6B3C; border-radius: 5px; padding: 12px 16px; margin-top: 12px;">
+                <div style="font-size: 16px; color: #0E1C42; line-height: 1.6;"><strong>What is removed:</strong> the 4th (F) and the 7th (B). Without those two pull-notes, the scale feels open and free. The five green keys are all you need.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 2 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127929; PART 2 &middot; THE BLACK-KEY SHORTCUT</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Here is a shortcut that makes pentatonic scales easy to find on any keyboard: the five black keys of a piano form a pentatonic scale. From left to right they are G&#9839;, A&#9839;, C&#9839;, D&#9839;, and F&#9839; (or spelled with flats: A&#9837;, B&#9837;, D&#9837;, E&#9837;, G&#9837;).</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Slide your finger across all five black keys: that is a pentatonic scale. There are no wrong notes. Any combination of those five keys will sound musical together, which is why pentatonic is a great starting point for improvisation.</p>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#127758; PENTATONIC ACROSS CULTURES</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.65;">Different cultures, same five-note structure: the West African kora, Scottish bagpipes, the Chinese guqin, blues guitar, and country music all rely on pentatonic scales. The scale is not owned by any one tradition. It keeps appearing because it is easy to sing, easy to harmonize, and sounds complete without resolving tension.</div>
+        </div>
+
+        <!-- WIDGET 1: ow-select -->
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; TRY IT &middot; PENTATONIC KNOWLEDGE CHECK</div>
+            <div class="widget-question">Read each prompt. Think about your answer, then select it.</div>
+
+            <div class="widget-row" data-correct="1"
+                 data-fb="Correct. The major pentatonic skips the 4th and the 7th from a major scale."
+                 data-hint="Think about what gets removed from a major scale to make pentatonic.">
+                <div class="widget-row-prompt">1. The major pentatonic scale uses scale degrees ____.</div>
+                <div class="widget-options">
+                    <button data-choice="0">1-2-3-4-5</button>
+                    <button data-choice="1">1-2-3-5-6</button>
+                    <button data-choice="2">1-3-5-flat7</button>
+                    <button data-choice="3">2-4-6-1-3</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="3"
+                 data-fb="Correct. Removing the 4th and the 7th takes away the tension-creating pull tones."
+                 data-hint="These two notes create tension in a major scale. Without them, the scale feels more open.">
+                <div class="widget-row-prompt">2. Which two scale degrees are removed to make the major pentatonic?</div>
+                <div class="widget-options">
+                    <button data-choice="0">the 2nd and the 6th</button>
+                    <button data-choice="1">the 3rd and the 5th</button>
+                    <button data-choice="2">the 1st and the 4th</button>
+                    <button data-choice="3">the 4th and the 7th</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1"
+                 data-fb="Correct. C is a minor third (flat 3) above A."
+                 data-hint="Count from A up to the first black key in that group.">
+                <div class="widget-row-prompt">3. The minor pentatonic in A uses the notes A-C-D-E-G. What is the flat-3 in that scale?</div>
+                <div class="widget-options">
+                    <button data-choice="0">D</button>
+                    <button data-choice="1">C</button>
+                    <button data-choice="2">G</button>
+                    <button data-choice="3">E</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2"
+                 data-fb="Correct. Classical sonata form relies on diatonic major/minor scales, not pentatonic."
+                 data-hint="Think about which style depends on the pull between the 4th, 7th, and the tonic.">
+                <div class="widget-row-prompt">4. Which instrument tradition does NOT typically use a pentatonic scale?</div>
+                <div class="widget-options">
+                    <button data-choice="0">Scottish bagpipes</button>
+                    <button data-choice="1">West African kora</button>
+                    <button data-choice="2">Classical sonata form</button>
+                    <button data-choice="3">Chinese guqin</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ===================== PART 3 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127932; PART 3 &middot; USING PENTATONIC FOR MELODY AND IMPROVISATION</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Because there are no strong dissonances in the pentatonic scale, a pentatonic melody sounds complete even if you stop without resolving any tension. The notes simply rest.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Many familiar pop melodies are built largely on the major pentatonic. Listen to how few different pitches some of the most recognizable songs use. You can search for listening examples here: <a href="https://www.youtube.com/results?search_query=pentatonic+scale+melodies+examples" target="_blank" style="color: #1A6B3C;">YouTube: pentatonic scale melody examples</a>.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Rock and blues solos most often use the <strong>minor pentatonic</strong>. The characteristic sound of electric guitar improvisation comes almost entirely from moving around those five notes. To hear this in action, listen to some examples: <a href="https://www.youtube.com/results?search_query=pentatonic+improvisation+tutorial" target="_blank" style="color: #1A6B3C;">YouTube: pentatonic improvisation tutorial</a>.</p>
+
+        <div style="background: #EFEAF6; border-left: 5px solid #6B4C9A; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 8px;">&#127926; SUMMARY: TWO PENTATONIC TYPES</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.7;">
+                <strong style="color: #2A9D5C;">Major pentatonic (1-2-3-5-6):</strong> bright, open, uplifting. Common in folk, pop, gospel.<br>
+                <strong style="color: #6B4C9A;">Minor pentatonic (1-flat&#8209;3-4-5-flat&#8209;7):</strong> darker, bluesy, expressive. Common in blues, rock, and R&amp;B.
+            </div>
+        </div>
+
+        <!-- WIDGET 2: ow-reflect -->
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; REFLECTIVE CHECK-IN</div>
+            <div class="widget-question">Think of a melody you know well. Does it stay on five notes, or does it use all seven? Just notice and answer.</div>
+            <div class="widget-options">
+                <button data-response="Many catchy melodies do. Pentatonic gives you just enough variety without the pull of leading tones. You have been hearing it your whole life.">It seems to stay on about five notes</button>
+                <button data-response="Most classical and pop melodies do use all seven. You will have a great ear for noticing when a melody skips to pentatonic territory from now on.">It seems to use all seven notes</button>
+                <button data-response="That is a perfectly honest answer. Try humming a tune and counting how many different pitches it uses. You might surprise yourself.">I'm not sure yet</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ACTIVITY (purple top border, Tier 1) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#127932; ACTIVITY &middot; CREATE YOUR PENTATONIC MELODY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Now you will write a short melody using only pentatonic notes. Follow the steps below.</p>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Open <strong>MuseScore</strong> (free at musescore.org) or use the virtual piano at <strong>Chrome Music Lab Song Maker</strong> (musiclab.chromeexperiments.com/Song-Maker, free, in-browser).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Use only the notes of C major pentatonic: <span class="note-chip">C</span><span class="note-chip">D</span><span class="note-chip">E</span><span class="note-chip">G</span><span class="note-chip">A</span>. Skip F and B entirely.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Write or record a melody of at least 8 notes. You can repeat notes. No chords are needed. Just a single melodic line.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In your notebook, write: what mood does your melody have? What did you discover about how pentatonic feels?</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Export your MuseScore file (.mscz) or take a screenshot of your Song Maker melody. Upload to Canvas.</div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP (green top border) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The pentatonic scale removes the tension notes and leaves five pitches that always sound at home together. Major pentatonic (1-2-3-5-6) has a bright, open feel; minor pentatonic (1-flat&#8209;3-4-5-flat&#8209;7) has a darker, bluesy feel. Every time you slide across the five black keys on a piano, you are playing a pentatonic scale.</p>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT (purple top border) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Upload your pentatonic melody to Canvas.</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Submit your MuseScore file (.mscz) or a Song Maker screenshot with 1-2 sentences about the mood of your melody.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Complete the Module 28 Check (Canvas quiz).</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short auto-graded quiz on pentatonic scale degrees, pitch names, and world music connections. Multiple attempts allowed.</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 28.01 &middot; Pentatonic Scales: The Five-Note Scale</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

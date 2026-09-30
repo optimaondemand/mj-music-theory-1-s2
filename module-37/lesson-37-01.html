@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 37.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    /* music note label chips */
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+
+    /* ===== SPIRAL STAIRCASE VISUAL ===== */
+    .spiral-staircase { display: flex; align-items: flex-end; gap: 0; overflow-x: auto; padding: 20px 10px 10px; }
+    .stair-step { flex: 1; min-width: 150px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .stair-box { border-radius: 6px 6px 0 0; padding: 14px 12px; color: #ffffff; }
+    .stair-q1 { background: #0E1C42; }
+    .stair-q2 { background: #1A6B3C; }
+    .stair-q3 { background: #6B4C9A; }
+    .stair-q4 { background: #55C8E8; color: #0E1C42 !important; }
+    .stair-q4 .stair-label { color: #0E1C42; }
+    .stair-q4 .stair-topics li { color: #0E1C42; }
+    .stair-number { font-size: 22px; font-weight: bold; margin-bottom: 4px; }
+    .stair-label { font-size: 15px; font-weight: bold; line-height: 1.4; margin-bottom: 8px; }
+    .stair-topics { list-style: none; padding: 0; margin: 0; }
+    .stair-topics li { font-size: 15px; line-height: 1.4; opacity: 0.9; margin-bottom: 2px; padding-left: 10px; position: relative; }
+    .stair-topics li::before { content: "\2022"; position: absolute; left: 0; }
+    .stair-base { height: 8px; border-radius: 0 0 4px 4px; margin-bottom: 0; }
+    .stair-base-q1 { background: #0E1C42; }
+    .stair-base-q2 { background: #1A6B3C; }
+    .stair-base-q3 { background: #6B4C9A; }
+    .stair-base-q4 { background: #55C8E8; }
+    @media (max-width: 640px) {
+        .spiral-staircase { flex-direction: column; align-items: stretch; }
+        .stair-step { min-width: unset; }
+        .stair-box { border-radius: 6px; }
+        .stair-base { display: none; }
+    }
+
+    /* ===== PORTFOLIO CHECKLIST VISUAL ===== */
+    .portfolio-checklist { background: #F7FAF8; border: 2px solid #2A9D5C; border-left: 6px solid #2A9D5C; border-radius: 8px; padding: 18px 22px; margin: 16px 0; }
+    .portfolio-title { font-size: 16px; font-weight: bold; color: #0E1C42; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #BFE3CC; }
+    .portfolio-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 5px; margin-bottom: 6px; }
+    .portfolio-item.even { background: #FFFFFF; }
+    .portfolio-item.odd { background: #F7FAF8; }
+    .portfolio-check { font-size: 18px; color: #2A9D5C; flex-shrink: 0; margin-top: 1px; }
+    .portfolio-item-text { font-size: 16px; color: #1a2340; line-height: 1.55; }
+    .portfolio-item-label { font-weight: bold; color: #0E1C42; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 37</div>
+        <div style="font-size: 12px; color: #666;">Applied Music and Composition</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 37.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Year-End Review: Music Theory I Synthesis</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 45 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 37.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Year-End Review: Music Theory I Synthesis</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You have spent a full year studying music theory. Today is different: instead of learning something new, you look back at everything you built. Every skill connects. Every idea points to another. Today you see the whole map.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> trace how Q1 through Q4 built on each other, naming the key idea from each quarter.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> identify where my understanding grew most and where questions remain.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> assemble my best work from the year into a Year-End Portfolio.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your work from the full year: compositions, analyses, ear-training scores, and written reflections.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Open Music Theory v2, free at viva.pressbooks.pub/openmusictheory: Parts I&ndash;IV, VI&ndash;VII for any review.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Music Theory notebook (digital or paper).</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; THE YEAR AS A SPIRAL</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Music Theory I did not move in a straight line. It moved in a spiral: each quarter returned to the same fundamental ideas (pitch, rhythm, harmony, listening) at a higher level of detail and skill. Here is how the four quarters connect.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Quarter 1 built the foundation.</strong> You learned how music is written (staff, clefs, rhythm), what pitches are and how they relate to each other (scales, intervals, triads), and how to name and classify what you hear. Without Q1, nothing else has a name.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Quarter 2 deepened that foundation into harmony.</strong> You learned how chords function in a key (diatonic harmony, Roman numerals, chord progressions), how minor keys differ from major, and how composers organize music across time (form). Q2 took the building blocks of Q1 and showed you how to connect them.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Quarter 3 trained your ear and widened your view.</strong> Ear training asked you to hear what you had been reading: to identify intervals, chords, and melodic patterns by sound alone. Music history placed what you learned in time: you heard how composers from different eras used the same theory tools differently. Counterpoint, species rules, and world music broadened the picture beyond any single tradition. Q3 turned head knowledge into listening knowledge.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Quarter 4 applied everything.</strong> Composition asked you to use pitch, rhythm, harmony, form, ear, and history together. You did not just analyze: you made something. Music technology showed you how the tools around you connect to the theory inside you. And now, at Module 37, you review and reflect: which ideas became part of how you hear music?</p>
+
+        <!-- VISUAL: 4-Quarter Spiral Staircase -->
+        <div style="background: #FCFCFD; border: 1px solid #E2E7F0; border-radius: 8px; padding: 16px; margin: 14px 0 0;">
+            <div class="spiral-staircase">
+
+                <div class="stair-step">
+                    <div class="stair-box stair-q1" style="min-height: 100px;">
+                        <div class="stair-number">Q1</div>
+                        <div class="stair-label">Foundations: Notation, Rhythm, Scales, Intervals, Triads</div>
+                        <ul class="stair-topics">
+                            <li>Staff, clefs, note values</li>
+                            <li>Major scale construction</li>
+                            <li>Interval identification</li>
+                            <li>Major, minor, diminished triads</li>
+                        </ul>
+                    </div>
+                    <div class="stair-base stair-base-q1"></div>
+                </div>
+
+                <div class="stair-step">
+                    <div class="stair-box stair-q2" style="min-height: 150px;">
+                        <div class="stair-number">Q2</div>
+                        <div class="stair-label">Harmony: Diatonic Chords, Minor Keys, Form</div>
+                        <ul class="stair-topics">
+                            <li>Roman numeral analysis</li>
+                            <li>Chord progressions (I&ndash;IV&ndash;V&ndash;I)</li>
+                            <li>Natural, harmonic, melodic minor</li>
+                            <li>Binary and ternary form</li>
+                        </ul>
+                    </div>
+                    <div class="stair-base stair-base-q2"></div>
+                </div>
+
+                <div class="stair-step">
+                    <div class="stair-box stair-q3" style="min-height: 200px;">
+                        <div class="stair-number">Q3</div>
+                        <div class="stair-label">Ear and History: Ear Training, Music History, Counterpoint, World Music</div>
+                        <ul class="stair-topics">
+                            <li>Interval and chord recognition by ear</li>
+                            <li>Baroque through Modern eras</li>
+                            <li>Species counterpoint rules</li>
+                            <li>Non-Western pitch and rhythm systems</li>
+                        </ul>
+                    </div>
+                    <div class="stair-base stair-base-q3"></div>
+                </div>
+
+                <div class="stair-step">
+                    <div class="stair-box stair-q4" style="min-height: 250px;">
+                        <div class="stair-number" style="color: #0E1C42;">Q4</div>
+                        <div class="stair-label">Applied Music: Composition, Technology, Synthesis</div>
+                        <ul class="stair-topics">
+                            <li>Original melody and composition</li>
+                            <li>DAW, MIDI, and music technology</li>
+                            <li>Year-end review across all quarters</li>
+                            <li>Portfolio and reflection</li>
+                        </ul>
+                    </div>
+                    <div class="stair-base stair-base-q4"></div>
+                </div>
+
+            </div>
+            <div style="font-size: 15px; color: #666; text-align: center; margin-top: 8px; font-style: italic;">Each quarter built on the one before. Theory is a spiral, not a checklist.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 2 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 2 &middot; Q1 SPIRAL REVIEW</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Key ideas:</strong> The staff and clefs give pitches their names. The major scale is a pattern of whole and half steps. Intervals measure distance. Triads stack thirds.</p>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 10px 0 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#9998; ASK YOURSELF</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">Can I still name the notes in a C major scale? A G major scale? Can I name an interval by sight and by ear? Can I identify a major, minor, or diminished triad?</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 3 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 3 &middot; Q2 SPIRAL REVIEW</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Key ideas:</strong> Roman numerals describe chord function in a key. The I chord sounds like home; V sounds like it needs to resolve; IV adds richness. The natural, harmonic, and melodic minor scales each have a specific character. Binary and ternary form describe the shape of a piece.</p>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 10px 0 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#9998; ASK YOURSELF</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">Can I write a I&ndash;IV&ndash;V&ndash;I progression in any key? Can I describe what makes minor sound "minor"? Can I identify ABA form when I hear it?</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 4 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 4 &middot; Q3 SPIRAL REVIEW</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Key ideas:</strong> Intervals sound different, and ear training teaches you to hear which is which. Composers from the Baroque through the Modern era used the same theory tools for very different goals. Species counterpoint gives rules for two independent voices; the rules point to one goal: voices that move well together. Non-Western music systems organize pitch and rhythm in ways that are genuinely different from (not inferior to) Western conventions.</p>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 10px 0 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#9998; ASK YOURSELF</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">Can I sing a perfect fifth in tune? Can I identify at least one composer per era? Do I understand why "do not make parallel fifths" is a rule?</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 5 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 5 &middot; Q4 SPIRAL REVIEW AND GROWTH</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Key ideas:</strong> Composing forces you to make decisions, not just identify them. A strong original melody has a clear shape: it rises and falls, uses the chord tones of the key, and has a recognizable rhythm. Technology does not replace theory; it gives theory tools to work with sound directly.</p>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 10px 0 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#9998; ASK YOURSELF</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">What was the hardest moment in my original composition? What would I do differently? Which music theory concept am I most curious to keep exploring?</div>
+        </div>
+    </div>
+
+    <!-- ===================== WIDGET 1: REFLECT ===================== -->
+    <div class="optima-widget ow-reflect">
+        <div class="widget-kicker">&#9889; CHECK IN WITH YOURSELF</div>
+        <div class="widget-question">How are you feeling right now, looking back at the full year? (No wrong answer.)</div>
+        <div class="widget-options">
+            <button data-response="That is real. You covered a full year of theory. That is worth naming.">Proud. I worked hard and I can see how much I learned.</button>
+            <button data-response="That is understandable. Theory is cumulative: you do not have to remember everything at once. Focus on what clicked and what you want to understand better.">Overwhelmed. There is a lot to remember.</button>
+            <button data-response="That honesty is useful. In your Year-End Reflection, name the part that did not land yet. Noticing the gap is the beginning of closing it.">Mixed. Some parts landed, some did not.</button>
+            <button data-response="Hold on to that. Music theory goes much deeper. What you learned this year is a strong foundation for wherever you take it.">Curious. I want to keep going.</button>
+        </div>
+        <div class="widget-feedback"></div>
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- ===================== YEAR-END PORTFOLIO CHECKLIST VISUAL ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; YEAR-END PORTFOLIO: WHAT TO ASSEMBLE</div>
+
+        <div class="portfolio-checklist">
+            <div class="portfolio-title">Year-End Portfolio Contents</div>
+
+            <div class="portfolio-item even">
+                <div class="portfolio-check">&#9744;</div>
+                <div class="portfolio-item-text">
+                    <span class="portfolio-item-label">1. My best original composition.</span> The final score plus a program note: 2&ndash;3 sentences about what you intended and one decision you made.
+                </div>
+            </div>
+
+            <div class="portfolio-item odd">
+                <div class="portfolio-check">&#9744;</div>
+                <div class="portfolio-item-text">
+                    <span class="portfolio-item-label">2. My best harmonic analysis.</span> A clear, labeled example with Roman numerals and a brief explanation of your choices.
+                </div>
+            </div>
+
+            <div class="portfolio-item even">
+                <div class="portfolio-check">&#9744;</div>
+                <div class="portfolio-item-text">
+                    <span class="portfolio-item-label">3. My best ear-training score.</span> Plus a short reflection (3&ndash;4 sentences): How did your ability to identify intervals, chords, or melodies change? What do you hear differently now?
+                </div>
+            </div>
+
+            <div class="portfolio-item odd">
+                <div class="portfolio-check">&#9744;</div>
+                <div class="portfolio-item-text">
+                    <span class="portfolio-item-label">4. Year-end reflection (1&ndash;2 pages).</span> Answer three questions: (a) What was the most important concept I learned? (b) How has my listening changed this year? (c) What music theory question am I most curious about next year?
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== WIDGET 2: YEAR SPIRAL SELECT ===================== -->
+    <div class="optima-widget ow-select">
+        <div class="widget-kicker">&#9889; YEAR SPIRAL REVIEW</div>
+        <div class="widget-question">For each question, decide your answer, then tap it.</div>
+
+        <div class="widget-row" data-correct="3" data-fb="Correct. Roman numerals label chords by their function and position in the key." data-hint="Think about how chords are labeled by number. It is a numbering system using Roman letters.">
+            <div class="widget-row-prompt">1. Which term describes a chord's function in a key (I, IV, V, etc.)?</div>
+            <div class="widget-options">
+                <button data-choice="0">Ledger line</button>
+                <button data-choice="1">Species</button>
+                <button data-choice="2">Maqam</button>
+                <button data-choice="3">Roman numeral</button>
+            </div>
+        </div>
+
+        <div class="widget-row" data-correct="1" data-fb="Correct. Ear training builds the skill of recognizing musical elements by sound alone." data-hint="Q3 turned reading knowledge into hearing knowledge. Think about what sense was being trained.">
+            <div class="widget-row-prompt">2. Ear training in Q3 focused on learning to&hellip;</div>
+            <div class="widget-options">
+                <button data-choice="0">Write chord progressions from scratch</button>
+                <button data-choice="1">Identify intervals, chords, and melodies by listening</button>
+                <button data-choice="2">Read bass clef notation</button>
+                <button data-choice="3">Compose in binary form</button>
+            </div>
+        </div>
+
+        <div class="widget-row" data-correct="0" data-fb="Correct. The independence of the voices is the whole point of counterpoint. Parallel fifths collapse that independence." data-hint="Think about the goal of counterpoint: two voices that move well together but remain independent.">
+            <div class="widget-row-prompt">3. In species counterpoint, why is it a rule to avoid parallel fifths?</div>
+            <div class="widget-options">
+                <button data-choice="0">Parallel fifths make the two voices sound like one, losing independence</button>
+                <button data-choice="1">Fifths are dissonant intervals</button>
+                <button data-choice="2">The rule applies only to the bass voice</button>
+                <button data-choice="3">Parallel fifths are found only in world music</button>
+            </div>
+        </div>
+
+        <div class="widget-row" data-correct="2" data-fb="Correct. Q2 extended diatonic harmony into the organization of music across time, which includes form." data-hint="Form describes how a piece is organized across time. Which quarter covered how music is structured, not just what notes are in it?">
+            <div class="widget-row-prompt">4. Which quarter introduced the concept of musical form (binary, ternary, etc.)?</div>
+            <div class="widget-options">
+                <button data-choice="0">Q1</button>
+                <button data-choice="1">Q3</button>
+                <button data-choice="2">Q2</button>
+                <button data-choice="3">Q4</button>
+            </div>
+        </div>
+
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- What You'll Do Next (purple) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Year-End Portfolio (Canvas Assignment)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Assemble your four portfolio items (best composition plus program note, best harmonic analysis, best ear-training score plus reflection, year-end reflection answering the three questions). Compile into one document or file and upload to Canvas. Quality over quantity.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Year-End Portfolio Walkthrough Discussion (Canvas Discussion)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Record a short audio or video walkthrough (2&ndash;4 minutes) of ONE item in your portfolio. Describe your creative or analytical choices and what you would do differently. Post to the discussion. Optional: comment on a classmate's walkthrough.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 37 Year-End Check (Canvas quiz)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short auto-graded review quiz covering all four quarters.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Theory is a spiral. Q1 named the notes. Q2 connected them into harmony. Q3 trained your ear and widened your view. Q4 put everything into practice. You did not just study music: you developed a way of hearing it. That stays with you.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 37.01 &middot; Year-End Review: Music Theory I Synthesis</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

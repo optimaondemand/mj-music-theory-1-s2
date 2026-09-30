@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 31.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    /* music note label chips */
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 31</div>
+        <div style="font-size: 12px; color: #666;">Popular Song Analysis</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 31.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Form and Harmonic Schemas in Pop</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 40 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 31.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">How Songs Are Built: Form and Harmony in Pop Music</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Why do so many hit songs feel familiar even the first time you hear them?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Pop music is built from a small set of repeating blueprints: a handful of formal sections that appear in almost every chart-topping song, and a few chord progressions used so often that your brain has already memorized the sound. Once you can name those blueprints, you will hear the structure underneath any song you listen to.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the main formal sections of a pop song (intro, verse, pre-chorus, chorus, bridge, outro) and describe what each one does.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain verse-chorus form and identify it in a song by listening.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognize the I-V-vi-IV four-chord loop and the I-vi-IV-V doo-wop schema by name and by their chords in C major.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Open Music Theory v2, free at viva.pressbooks.pub/openmusictheory: read <em>Form in Pop</em> (p. 587-596), <em>Verse-Chorus Form</em> (p. 598-603), and <em>Harmonic Schemas</em> (p. 604-611).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Music Theory notebook (digital or paper) and a pencil.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Headphones, so you can listen to a song in Part 3.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; FORMAL SECTIONS</div>
+
+        <!-- reflective check-in (purple) -->
+        <div class="optima-widget ow-reflect">
+          <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+          <div class="widget-question">Think of a song you know well. Can you name where the "big moment" happens in it? (No wrong answer.)</div>
+          <div class="widget-options">
+            <button data-response="You are already hearing form without knowing the vocabulary. By the end of this part you will have a name for exactly that moment.">Yes, I know exactly where it is</button>
+            <button data-response="That instinct is a great starting point. Today you will learn the terms that put a clear label on what you are already sensing.">Sort of, but I couldn't describe it</button>
+            <button data-response="No problem at all. After this lesson you will hear songs differently and notice the structure the next time you listen to anything.">I've never thought about it</button>
+          </div>
+          <div class="widget-feedback"></div>
+          <button class="widget-reset">Reset</button>
+        </div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 18px 0 8px 0;">The sections of a pop song</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Every section in a pop song has a job. Here are the main ones:</p>
+        <ul style="font-size: 17px; color: #1a2340; line-height: 1.8; margin: 0 0 14px 0; padding-left: 22px;">
+            <li><strong>Intro:</strong> Opens the song, often instrumental. Sets the mood before any singing starts.</li>
+            <li><strong>Verse:</strong> Tells the story. The words change each time, moving the narrative forward. Energy is usually lower here.</li>
+            <li><strong>Pre-chorus:</strong> A short section that builds tension between the verse and the chorus. Not every song has one.</li>
+            <li><strong>Chorus:</strong> The emotional peak. Higher energy, most-repeated lyrics, the part everyone sings along to. The words stay the same every time it comes back.</li>
+            <li><strong>Bridge:</strong> A contrasting section that breaks the verse-chorus pattern before the final chorus. It gives the song a change of scene.</li>
+            <li><strong>Outro:</strong> Closes the song, often by fading out or winding down the energy.</li>
+        </ul>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">In <strong>verse-chorus form</strong>, the song alternates between verses and choruses. A typical sequence looks something like this:</p>
+
+        <!-- VISUAL: SVG form-map strip -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px; text-align:center; margin: 6px 0 14px; overflow-x: auto;">
+          <svg viewBox="0 0 700 90" width="100%" style="max-width:700px;" role="img" aria-label="A horizontal form map of a typical verse-chorus song. From left to right: Intro, Verse 1, Chorus, Verse 2, Chorus, Bridge, Chorus, Outro. The Chorus blocks are taller and green, indicating they are the emotional peak.">
+            <!-- INTRO: x=0, w=50, grey -->
+            <rect x="0" y="15" width="50" height="60" rx="3" fill="#4A5568"/>
+            <text x="25" y="49" font-size="9" fill="#FFFFFF" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">INTRO</text>
+
+            <!-- VERSE 1: x=50, w=100, teal -->
+            <rect x="50" y="15" width="100" height="60" rx="3" fill="#55C8E8"/>
+            <text x="100" y="49" font-size="9" fill="#FFFFFF" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">VERSE 1</text>
+
+            <!-- CHORUS: x=150, w=110, green, full height -->
+            <rect x="150" y="0" width="110" height="90" rx="3" fill="#1A6B3C"/>
+            <text x="205" y="49" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">CHORUS</text>
+
+            <!-- VERSE 2: x=260, w=100, teal -->
+            <rect x="260" y="15" width="100" height="60" rx="3" fill="#55C8E8"/>
+            <text x="310" y="49" font-size="9" fill="#FFFFFF" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">VERSE 2</text>
+
+            <!-- CHORUS: x=360, w=110, green, full height -->
+            <rect x="360" y="0" width="110" height="90" rx="3" fill="#1A6B3C"/>
+            <text x="415" y="49" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">CHORUS</text>
+
+            <!-- BRIDGE: x=470, w=80, purple -->
+            <rect x="470" y="15" width="80" height="60" rx="3" fill="#6B4C9A"/>
+            <text x="510" y="49" font-size="9" fill="#FFFFFF" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">BRIDGE</text>
+
+            <!-- CHORUS: x=550, w=110, green, full height -->
+            <rect x="550" y="0" width="110" height="90" rx="3" fill="#1A6B3C"/>
+            <text x="605" y="49" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">CHORUS</text>
+
+            <!-- OUTRO: x=660, w=40, grey -->
+            <rect x="660" y="15" width="40" height="60" rx="3" fill="#4A5568"/>
+            <text x="680" y="49" font-size="8" fill="#FFFFFF" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">OUTRO</text>
+          </svg>
+          <div style="font-size:15px; color:#666; margin-top:6px;">A typical verse-chorus form. The chorus (green) is the song's emotional peak. Taller blocks show higher energy sections.</div>
+        </div>
+
+        <!-- Widget 1: ow-select, varied correct indices 2, 0, 3 -->
+        <div class="optima-widget ow-select">
+          <div class="widget-kicker">&#9889; CHECK YOUR UNDERSTANDING</div>
+          <div class="widget-question">Use what you just read to answer these questions.</div>
+
+          <div class="widget-row" data-correct="2" data-fb="Correct. The chorus is the emotional peak of verse-chorus form: highest energy, most repeated, the part everyone sings along to." data-hint="Think about which section everyone sings when they hear a pop song.">
+            <div class="widget-row-prompt">1. Which section of a song has the highest energy, is repeated the most, and is the part everyone sings along to?</div>
+            <div class="widget-options">
+              <button data-choice="0">Verse</button>
+              <button data-choice="1">Intro</button>
+              <button data-choice="2">Chorus</button>
+              <button data-choice="3">Bridge</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="0" data-fb="Correct. The bridge provides contrast before the final chorus." data-hint="The bridge gives the song a change of scene before the ending.">
+            <div class="widget-row-prompt">2. In a song labeled V1-C-V2-C-B-C, what does the "B" stand for?</div>
+            <div class="widget-options">
+              <button data-choice="0">Bridge</button>
+              <button data-choice="1">Bass</button>
+              <button data-choice="2">Beat</button>
+              <button data-choice="3">Verse</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="3" data-fb="Correct. The verse carries the narrative and builds toward the chorus. Words change each time." data-hint="Verses change words each time; they move the story forward.">
+            <div class="widget-row-prompt">3. What is the role of the verse in a song?</div>
+            <div class="widget-options">
+              <button data-choice="0">It repeats the main hook</button>
+              <button data-choice="1">It resolves the harmony</button>
+              <button data-choice="2">It is always the loudest part</button>
+              <button data-choice="3">It tells the story and sets up the chorus</button>
+            </div>
+          </div>
+
+          <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ===================== PART 2 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127929; PART 2 &middot; HARMONIC SCHEMAS</div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 8px 0;">Why certain chord progressions sound familiar</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">A <strong>harmonic schema</strong> is a chord progression used so often that it functions like a template. When a composer picks one of these schemas, listeners already know the sound before they have heard the specific song.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The most common schema in pop is the <strong>I-V-vi-IV loop</strong> (often called the "four-chord loop"). In the key of C major those chords are <strong>C - G - Am - F</strong>. The loop just keeps repeating under the whole song.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">A second classic schema is the <strong>I-vi-IV-V</strong>, also called the "50s doo-wop" progression. In C major that is <strong>C - Am - F - G</strong>. You hear this one in countless songs from the 1950s through today.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">One important legal note: chord progressions cannot be protected by copyright. Only a specific melody, lyric, and recording are legally protected. That means two different songs can share the exact same chord progression with no legal issue at all.</p>
+
+        <!-- VISUAL: loop diagrams SVG -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px; text-align:center; margin: 6px 0 14px; overflow-x: auto;">
+          <svg viewBox="0 0 600 200" width="100%" style="max-width:600px;" role="img" aria-label="Two harmonic schema diagrams. Top row: the I-V-vi-IV four-chord loop in C major: C, G, Am, F with a looping arrow. Bottom row: the I-vi-IV-V doo-wop schema in C major: C, Am, F, G.">
+
+            <!-- Four-chord loop label -->
+            <text x="300" y="18" font-size="12" fill="#1A6B3C" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">I-V-vi-IV loop</text>
+
+            <!-- Four chord boxes: x=50,175,325,450 (adjusted to fit viewBox) -->
+            <!-- I / C -->
+            <rect x="50" y="25" width="100" height="50" rx="6" fill="#E7F4EC" stroke="#1A6B3C" stroke-width="2"/>
+            <text x="100" y="47" font-size="13" fill="#1A6B3C" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">I</text>
+            <text x="100" y="65" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C</text>
+
+            <!-- V / G -->
+            <rect x="170" y="25" width="100" height="50" rx="6" fill="#E7F4EC" stroke="#1A6B3C" stroke-width="2"/>
+            <text x="220" y="47" font-size="13" fill="#1A6B3C" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">V</text>
+            <text x="220" y="65" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">G</text>
+
+            <!-- vi / Am -->
+            <rect x="330" y="25" width="100" height="50" rx="6" fill="#E7F4EC" stroke="#1A6B3C" stroke-width="2"/>
+            <text x="380" y="47" font-size="13" fill="#1A6B3C" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">vi</text>
+            <text x="380" y="65" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">Am</text>
+
+            <!-- IV / F -->
+            <rect x="450" y="25" width="100" height="50" rx="6" fill="#E7F4EC" stroke="#1A6B3C" stroke-width="2"/>
+            <text x="500" y="47" font-size="13" fill="#1A6B3C" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">IV</text>
+            <text x="500" y="65" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">F</text>
+
+            <!-- Arrows between boxes (row 1) -->
+            <line x1="152" y1="50" x2="168" y2="50" stroke="#1A6B3C" stroke-width="2" marker-end="url(#arr-green)"/>
+            <line x1="272" y1="50" x2="328" y2="50" stroke="#1A6B3C" stroke-width="2" marker-end="url(#arr-green)"/>
+            <line x1="432" y1="50" x2="448" y2="50" stroke="#1A6B3C" stroke-width="2" marker-end="url(#arr-green)"/>
+            <!-- Loop-back arrow from IV to I (curved path above) -->
+            <path d="M550,24 Q300,-10 50,24" fill="none" stroke="#1A6B3C" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-green)"/>
+
+            <!-- Doo-wop label -->
+            <text x="300" y="115" font-size="12" fill="#6B4C9A" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">I-vi-IV-V doo-wop</text>
+
+            <!-- Doo-wop boxes -->
+            <!-- I / C -->
+            <rect x="50" y="122" width="100" height="50" rx="6" fill="#EFEAF6" stroke="#6B4C9A" stroke-width="2"/>
+            <text x="100" y="144" font-size="13" fill="#6B4C9A" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">I</text>
+            <text x="100" y="162" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">C</text>
+
+            <!-- vi / Am -->
+            <rect x="170" y="122" width="100" height="50" rx="6" fill="#EFEAF6" stroke="#6B4C9A" stroke-width="2"/>
+            <text x="220" y="144" font-size="13" fill="#6B4C9A" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">vi</text>
+            <text x="220" y="162" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">Am</text>
+
+            <!-- IV / F -->
+            <rect x="330" y="122" width="100" height="50" rx="6" fill="#EFEAF6" stroke="#6B4C9A" stroke-width="2"/>
+            <text x="380" y="144" font-size="13" fill="#6B4C9A" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">IV</text>
+            <text x="380" y="162" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">F</text>
+
+            <!-- V / G -->
+            <rect x="450" y="122" width="100" height="50" rx="6" fill="#EFEAF6" stroke="#6B4C9A" stroke-width="2"/>
+            <text x="500" y="144" font-size="13" fill="#6B4C9A" text-anchor="middle" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">V</text>
+            <text x="500" y="162" font-size="12" fill="#0E1C42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">G</text>
+
+            <!-- Arrows (row 2) -->
+            <line x1="152" y1="147" x2="168" y2="147" stroke="#6B4C9A" stroke-width="2" marker-end="url(#arr-purple)"/>
+            <line x1="272" y1="147" x2="328" y2="147" stroke="#6B4C9A" stroke-width="2" marker-end="url(#arr-purple)"/>
+            <line x1="432" y1="147" x2="448" y2="147" stroke="#6B4C9A" stroke-width="2" marker-end="url(#arr-purple)"/>
+
+            <!-- Arrow marker definitions -->
+            <defs>
+              <marker id="arr-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#1A6B3C"/>
+              </marker>
+              <marker id="arr-purple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#6B4C9A"/>
+              </marker>
+            </defs>
+          </svg>
+          <div style="font-size:15px; color:#666; margin-top:6px;">The I-V-vi-IV loop (green) and the I-vi-IV-V doo-wop schema (purple), both shown in C major. Either pattern can repeat through a whole song.</div>
+        </div>
+
+        <!-- Widget 2: ow-flip flip-cards -->
+        <div style="font-size: 16px; color: #6B4C9A; margin: 6px 0 8px;">&#9889; TAP EACH CARD to reveal the chords:</div>
+        <div class="flip-grid">
+          <div class="optima-widget" style="margin:0;">
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:17px;color:#0E1C42;">The I-V-vi-IV loop in C major<br><span style="font-size:16px;color:#666;">(tap to reveal)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.8;"><span class="note-chip">C</span><span style="font-size:16px;color:#1A6B3C;margin:0 4px;">&ndash;</span><span class="note-chip">G</span><span style="font-size:16px;color:#1A6B3C;margin:0 4px;">&ndash;</span><span class="note-chip">Am</span><span style="font-size:16px;color:#1A6B3C;margin:0 4px;">&ndash;</span><span class="note-chip">F</span><br><span style="font-size:15px;color:#666;">I &nbsp;&nbsp;-&nbsp;&nbsp; V &nbsp;&nbsp;-&nbsp;&nbsp; vi &nbsp;&nbsp;-&nbsp;&nbsp; IV</span></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+          </div>
+          <div class="optima-widget" style="margin:0;">
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:17px;color:#0E1C42;">The doo-wop schema I-vi-IV-V in C major<br><span style="font-size:16px;color:#666;">(tap to reveal)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.8;"><span class="note-chip">C</span><span style="font-size:16px;color:#1A6B3C;margin:0 4px;">&ndash;</span><span class="note-chip">Am</span><span style="font-size:16px;color:#1A6B3C;margin:0 4px;">&ndash;</span><span class="note-chip">F</span><span style="font-size:16px;color:#1A6B3C;margin:0 4px;">&ndash;</span><span class="note-chip">G</span><br><span style="font-size:15px;color:#666;">I &nbsp;&nbsp;-&nbsp;&nbsp; vi &nbsp;&nbsp;-&nbsp;&nbsp; IV &nbsp;&nbsp;-&nbsp;&nbsp; V</span></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+          </div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 3 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127931; PART 3 &middot; COPYRIGHT AND YOUR ANALYSIS</div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 8px 0;">What copyright protects (and what it does not)</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Copyright law protects a specific combination of melody, lyrics, and recording. It does <strong>not</strong> protect a chord progression, a time signature, or a key. That is why you can describe the harmonic schema of any song without reproducing it: the sequence I-V-vi-IV is a description of a pattern, not the song itself. Different artists can legally use the exact same chord progression.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">For your analysis work, the rule is straightforward: link out to a legal recording (Spotify, YouTube, Apple Music), describe what you hear in your own words, and do not paste lyrics or copy out notation. Describing form and harmony is the job of a music theorist; reproducing someone else's creative expression is not.</p>
+
+        <!-- Activity callout (purple border) -->
+        <div style="background: #EFEAF6; border-left: 5px solid #6B4C9A; border-radius: 6px; padding: 16px 20px; margin: 16px 0;">
+            <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 10px;">&#9997;&#65039; YOUR TURN</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Pick a song you know. Open the recording in a separate tab on a legal streaming service or YouTube. Listen once through and sketch the form in your notebook: label each section (Intro, Verse, Chorus, Bridge, Outro). Then write the chords of the chorus if you can figure them out. Does it use the four-chord loop?</p>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You will not paste lyrics or reproduce the melody. Just describe what you hear.</p>
+            <p style="font-size: 16px; color: #6B4C9A; margin: 0;"><strong>Note:</strong> Do this in your notebook first, then submit a 3-5 sentence written description in Canvas.</p>
+        </div>
+
+        <!-- Widget 3: ow-reflect check-in -->
+        <div class="optima-widget ow-reflect">
+          <div class="widget-kicker">&#9889; REFLECT</div>
+          <div class="widget-question">After listening and sketching, what surprised you most about how the song is structured? (No right/wrong answer.)</div>
+          <div class="widget-options">
+            <button data-response="That is common. At normal listening speed our brains blur sections together. Sketching forces you to track time and notice how quickly each section actually moves.">The sections were shorter/longer than I expected</button>
+            <button data-response="Most pop songs repeat the chorus three or four times. That repetition is deliberate: it is what makes the song stick. Now you can hear it as a structural choice, not just habit.">I noticed more repeated sections than I thought</button>
+            <button data-response="Some songs really do blur their sections, especially when they skip a pre-chorus or run the chorus straight into a bridge. Try listening for the energy shift: the chorus almost always hits louder or higher.">I couldn't find a clear structure</button>
+          </div>
+          <div class="widget-feedback"></div>
+          <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Pop songs are built from a small toolkit: a handful of repeating sections (verse, chorus, bridge) and a handful of repeating chord schemas (I-V-vi-IV, I-vi-IV-V). The chorus is the emotional peak; the verse tells the story; the bridge gives contrast. Chord progressions are not copyrightable, so describing them is exactly what music theorists do. The next time you hear a song, you have the vocabulary to describe what is happening.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 31.01 &middot; Popular Song Analysis</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

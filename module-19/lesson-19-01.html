@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 19.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    /* music note label chips */
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+    .sol-chip { display:inline-block; min-width:22px; text-align:center; background:#6B4C9A; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 19</div>
+        <div style="font-size: 12px; color: #666;">Sight-Singing and Solfege</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 19.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Solfege, Audiation, and Sight-Singing</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 40 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 19.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Hearing the Music First: Solfege and Sight-Singing</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">How can a musician hear music before singing a single note?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A musician who can sight-sing walks up to a piece of sheet music and sings it correctly the first time. No recording needed. No one to show them the melody. Just the page and the voice. The secret is a system of syllables that connects written notes to sounds you already know in your body. Today you learn that system.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> define sight-singing and explain why it matters for musicians.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain movable-do solfege and how it relates to scale degrees.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> sing a simple melody using solfege syllables with correct pitch and rhythm.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe the Curwen-Kodaly hand signs and how they reinforce pitch learning.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> apply the five-step strategy for preparing to sight-sing an unfamiliar melody.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Open Music Theory v2, free at viva.pressbooks.pub/openmusictheory: read the Sight-Singing chapter, pp. 154-162.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Music Theory notebook (digital or paper) and a pencil.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Headphones, for the linked ear-training and video resources.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; WHAT IS SIGHT-SINGING?</div>
+
+        <div class="optima-widget ow-reflect">
+          <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+          <div class="widget-question">Before you start: how often have you tried to sing along with sheet music you had never heard before?</div>
+          <div class="widget-options">
+            <button data-response="That is where most people start. By the end of this lesson you will have a system that makes a first attempt far more accurate.">Never. I wait until I hear it first.</button>
+            <button data-response="Good. You already understand the basic challenge. Today gives you the solfege framework to stay on track.">Sometimes, but I lose my place.</button>
+            <button data-response="Great. Use this lesson to sharpen the system you already use. The five-step strategy can make your instincts even more reliable.">Pretty often. I try to read as I go.</button>
+          </div>
+          <div class="widget-feedback"></div>
+          <button class="widget-reset">Reset</button>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Sight-singing</strong> is the ability to perform a piece of music at first reading, without having heard it played first. It is one of the most valuable practical skills a musician can develop. A musician who can sight-sing learns new music independently, auditions confidently, and participates in ensembles with less preparation time.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The foundation of sight-singing is <strong>audiation</strong>: a term coined by music educator Edwin Gordon. Audiation means mentally hearing a pitch relationship before producing it with your voice. Think of it like reading text silently before speaking it aloud. The more you practice reading melodies and then singing them, the more automatic your internal pitch sense becomes.</p>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 14px 0 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#128161; KEY TERMS</div>
+            <div style="font-size: 16px; color: #0E1C42; line-height: 1.8;">
+                <strong>Sight-singing:</strong> Performing written music at first reading, without prior rehearsal.<br>
+                <strong>Audiation:</strong> Hearing music internally before producing it with your voice (term from Edwin Gordon).<br>
+                <strong>Movable-do solfege:</strong> A system where "do" always equals the tonic of the current key.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 2 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127929; PART 2 &middot; MOVABLE-DO SOLFEGE</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">In <strong>movable-do solfege</strong>, the syllable "do" always represents the tonic of whatever key you are in. This makes the system transposable: once you know what do-re-mi sounds like, you can sing in any key by placing "do" on the correct tonic pitch. The syllables carry the intervallic relationships with them.</p>
+        <p style="font-size: 17px; color: #1a2340; margin: 0 0 14px 0; line-height: 1.65;">You have been using major solfege throughout this course. Now the table below maps all seven scale degrees to their syllables and shows which syllables change in minor.</p>
+
+        <!-- VISUAL 1: Solfege Ladder -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px 20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px;">SOLFEGE LADDER: Major and Minor Scale Degrees</div>
+          <div style="overflow-x: auto;">
+          <table style="width:100%; border-collapse: collapse; font-size: 16px;">
+            <thead>
+              <tr style="background: #0E1C42; color: #fff;">
+                <th style="padding: 8px 12px; text-align: center; width: 13%;">Degree</th>
+                <th style="padding: 8px 12px; text-align: center; width: 18%;">Major</th>
+                <th style="padding: 8px 12px; text-align: center; width: 22%;">Minor mod</th>
+                <th style="padding: 8px 12px; text-align: left; width: 47%;">What changes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #E7F4EC;">
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">8 / 1</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">do</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">do</span></td>
+                <td style="padding: 8px 12px; color: #555;">Tonic. No change.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">7</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">ti</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="sol-chip">te</span> <span style="font-size:15px;color:#666;">(natural minor)</span></td>
+                <td style="padding: 8px 12px; color: #555;">Lowered a half step in natural minor. Harmonic minor keeps <em>ti</em>.</td>
+              </tr>
+              <tr style="background: #E7F4EC;">
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">6</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">la</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="sol-chip">le</span></td>
+                <td style="padding: 8px 12px; color: #555;">Lowered a half step in natural and harmonic minor.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">5</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">sol</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">sol</span></td>
+                <td style="padding: 8px 12px; color: #555;">No change.</td>
+              </tr>
+              <tr style="background: #E7F4EC;">
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">4</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">fa</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">fa</span></td>
+                <td style="padding: 8px 12px; color: #555;">No change.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">3</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">mi</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="sol-chip">me</span></td>
+                <td style="padding: 8px 12px; color: #555;">Lowered a half step. This is the syllable that defines the minor sound.</td>
+              </tr>
+              <tr style="background: #E7F4EC;">
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">2</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">re</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">re</span></td>
+                <td style="padding: 8px 12px; color: #555;">No change.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; text-align: center; color: #0e1c42; font-weight:bold;">1</td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">do</span></td>
+                <td style="padding: 8px 12px; text-align: center;"><span class="note-chip">do</span></td>
+                <td style="padding: 8px 12px; color: #555;">Tonic. No change.</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <div style="font-size:15px; color:#666; margin-top:8px;">Green chips: major syllables and syllables that stay the same in minor. Purple chips: syllables that lower in minor forms.</div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">Quick reference by scale form:</p>
+        <ul style="font-size: 17px; color: #1a2340; line-height: 2; margin: 0 0 8px 0; padding-left: 22px;">
+            <li><strong>Major:</strong> do &ndash; re &ndash; mi &ndash; fa &ndash; sol &ndash; la &ndash; ti &ndash; do</li>
+            <li><strong>Natural minor:</strong> do &ndash; re &ndash; <span class="sol-chip" style="font-size:15px;">me</span> &ndash; fa &ndash; sol &ndash; <span class="sol-chip" style="font-size:15px;">le</span> &ndash; <span class="sol-chip" style="font-size:15px;">te</span> &ndash; do</li>
+            <li><strong>Harmonic minor:</strong> do &ndash; re &ndash; <span class="sol-chip" style="font-size:15px;">me</span> &ndash; fa &ndash; sol &ndash; <span class="sol-chip" style="font-size:15px;">le</span> &ndash; ti &ndash; do</li>
+        </ul>
+    </div>
+
+    <!-- ===================== PART 3 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127932; PART 3 &middot; CURWEN-KODALY HAND SIGNS</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The <strong>Curwen-Kodaly hand signs</strong> are physical gestures assigned to each solfege syllable. Developed by John Curwen in the 19th century and popularized by music educator Zoltan Kodaly, they add a kinesthetic (movement) dimension to pitch learning. When your hand, eye, ear, and voice all process the same pitch at once, the neural connections form faster.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The chart below shows the shape of each hand sign, from <strong>do</strong> at the bottom of the scale up to the next <strong>do</strong>. Study it, then use the flip cards to test yourself. You can also watch a hand-sign video in the resources section.</p>
+
+        <!-- VISUAL: Curwen-Kodaly hand-sign chart (schematic icons in the course SVG style) -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px 16px 10px; margin: 6px 0 16px; overflow-x:auto;">
+          <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px; text-align:center;">The Seven Hand Signs (do up to the next do)</div>
+          <svg viewBox="0 0 720 150" width="100%" style="max-width:720px; display:block; margin:0 auto;" role="img" aria-label="Schematic Curwen-Kodaly hand signs for the seven solfege syllables. do is a closed fist held level. re angles upward. mi is a flat, level hand. fa is a fist with the thumb pointing down. sol is an open palm with fingers up. la droops downward. ti is a fist with one finger pointing up toward the next do.">
+            <!-- do: closed fist -->
+            <g transform="translate(50,0)">
+              <rect x="-16" y="52" width="32" height="30" rx="11" fill="#1A6B3C"/>
+              <circle cx="-9" cy="52" r="4" fill="#1A6B3C"/><circle cx="-1" cy="52" r="4" fill="#1A6B3C"/><circle cx="7" cy="52" r="4" fill="#1A6B3C"/>
+              <text x="0" y="108" text-anchor="middle" font-size="15" fill="#0E1C42" font-weight="700">do</text>
+              <text x="0" y="126" text-anchor="middle" font-size="10" fill="#666">closed fist</text>
+            </g>
+            <!-- re: angles upward -->
+            <g transform="translate(150,0)">
+              <g transform="rotate(-32,0,70)">
+                <rect x="-14" y="58" width="28" height="24" rx="8" fill="#2A9D5C"/>
+                <line x1="-9" y1="58" x2="-9" y2="44" stroke="#2A9D5C" stroke-width="4" stroke-linecap="round"/>
+                <line x1="-1" y1="58" x2="-1" y2="42" stroke="#2A9D5C" stroke-width="4" stroke-linecap="round"/>
+                <line x1="7" y1="58" x2="7" y2="44" stroke="#2A9D5C" stroke-width="4" stroke-linecap="round"/>
+              </g>
+              <text x="0" y="108" text-anchor="middle" font-size="15" fill="#0E1C42" font-weight="700">re</text>
+              <text x="0" y="126" text-anchor="middle" font-size="10" fill="#666">angles up</text>
+            </g>
+            <!-- mi: flat, level -->
+            <g transform="translate(250,0)">
+              <rect x="-20" y="62" width="26" height="18" rx="7" fill="#1A6B3C"/>
+              <line x1="6" y1="66" x2="24" y2="66" stroke="#1A6B3C" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="6" y1="71" x2="26" y2="71" stroke="#1A6B3C" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="6" y1="76" x2="24" y2="76" stroke="#1A6B3C" stroke-width="3.5" stroke-linecap="round"/>
+              <text x="0" y="108" text-anchor="middle" font-size="15" fill="#0E1C42" font-weight="700">mi</text>
+              <text x="0" y="126" text-anchor="middle" font-size="10" fill="#666">flat, level</text>
+            </g>
+            <!-- fa: thumb down -->
+            <g transform="translate(350,0)">
+              <rect x="-15" y="50" width="30" height="26" rx="9" fill="#2A9D5C"/>
+              <circle cx="-8" cy="50" r="3.5" fill="#2A9D5C"/><circle cx="0" cy="50" r="3.5" fill="#2A9D5C"/><circle cx="8" cy="50" r="3.5" fill="#2A9D5C"/>
+              <line x1="-14" y1="72" x2="-14" y2="90" stroke="#2A9D5C" stroke-width="5" stroke-linecap="round"/>
+              <text x="0" y="108" text-anchor="middle" font-size="15" fill="#0E1C42" font-weight="700">fa</text>
+              <text x="0" y="126" text-anchor="middle" font-size="10" fill="#666">thumb down</text>
+            </g>
+            <!-- sol: open palm, fingers up -->
+            <g transform="translate(450,0)">
+              <rect x="-15" y="60" width="30" height="22" rx="7" fill="#1A6B3C"/>
+              <line x1="-11" y1="60" x2="-12" y2="44" stroke="#1A6B3C" stroke-width="4" stroke-linecap="round"/>
+              <line x1="-4" y1="60" x2="-4" y2="42" stroke="#1A6B3C" stroke-width="4" stroke-linecap="round"/>
+              <line x1="4" y1="60" x2="5" y2="42" stroke="#1A6B3C" stroke-width="4" stroke-linecap="round"/>
+              <line x1="11" y1="60" x2="12" y2="44" stroke="#1A6B3C" stroke-width="4" stroke-linecap="round"/>
+              <text x="0" y="108" text-anchor="middle" font-size="15" fill="#0E1C42" font-weight="700">sol</text>
+              <text x="0" y="126" text-anchor="middle" font-size="10" fill="#666">open palm</text>
+            </g>
+            <!-- la: droops down -->
+            <g transform="translate(550,0)">
+              <rect x="-15" y="50" width="30" height="20" rx="7" fill="#2A9D5C"/>
+              <line x1="-10" y1="70" x2="-12" y2="86" stroke="#2A9D5C" stroke-width="4" stroke-linecap="round"/>
+              <line x1="-3" y1="70" x2="-4" y2="88" stroke="#2A9D5C" stroke-width="4" stroke-linecap="round"/>
+              <line x1="4" y1="70" x2="5" y2="88" stroke="#2A9D5C" stroke-width="4" stroke-linecap="round"/>
+              <line x1="11" y1="70" x2="13" y2="86" stroke="#2A9D5C" stroke-width="4" stroke-linecap="round"/>
+              <text x="0" y="108" text-anchor="middle" font-size="15" fill="#0E1C42" font-weight="700">la</text>
+              <text x="0" y="126" text-anchor="middle" font-size="10" fill="#666">droops down</text>
+            </g>
+            <!-- ti: points up to do -->
+            <g transform="translate(660,0)">
+              <rect x="-15" y="58" width="30" height="26" rx="9" fill="#1A6B3C"/>
+              <line x1="2" y1="58" x2="2" y2="40" stroke="#1A6B3C" stroke-width="5" stroke-linecap="round"/>
+              <text x="0" y="108" text-anchor="middle" font-size="15" fill="#0E1C42" font-weight="700">ti</text>
+              <text x="0" y="126" text-anchor="middle" font-size="10" fill="#666">points up</text>
+            </g>
+          </svg>
+        </div>
+
+        <div style="font-size: 16px; color: #6B4C9A; margin: 6px 0 8px;">&#9889; TAP EACH CARD to see the hand sign position. Practice making the shape as you read.</div>
+
+        <div class="optima-widget">
+          <div class="widget-kicker">&#127930; HAND SIGN CARDS</div>
+          <div class="flip-grid">
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">do</span><br><span style="font-size:15px;color:#666;">Scale degree 1 (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>do:</strong> Fist held close to the waist, knuckles forward. Firm and grounded. This is the tonic anchor position.</div>
+            </div>
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">re</span><br><span style="font-size:15px;color:#666;">Scale degree 2 (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>re:</strong> Fingers pointing outward and slightly downward, wrist angled away. Moving away from the tonic.</div>
+            </div>
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">mi</span><br><span style="font-size:15px;color:#666;">Scale degree 3 (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>mi:</strong> Flat hand held sideways, palm facing the ground, fingers together. Horizontal and steady.</div>
+            </div>
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">fa</span><br><span style="font-size:15px;color:#666;">Scale degree 4 (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>fa:</strong> Thumb pointing downward, other fingers curled or relaxed. The only syllable with the thumb pointing down.</div>
+            </div>
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">sol</span><br><span style="font-size:15px;color:#666;">Scale degree 5 (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>sol:</strong> Flat open hand pointing outward at chest height, palm down, fingers spread. Open and confident.</div>
+            </div>
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">la</span><br><span style="font-size:15px;color:#666;">Scale degree 6 (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>la:</strong> Hand relaxed, slightly lower than sol position, palm angled softly downward. Softer and drooping.</div>
+            </div>
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">ti</span><br><span style="font-size:15px;color:#666;">Scale degree 7 (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>ti:</strong> Index finger points upward, the rest of the hand a loose fist. Ti pulls strongly up toward do.</div>
+            </div>
+            <div class="ow-flip" tabindex="0">
+              <div class="ow-flip-front" style="font-size:18px;color:#0E1C42;"><span class="note-chip" style="font-size:16px;">do'</span><br><span style="font-size:15px;color:#666;">Scale degree 8, the octave (tap to see sign)</span></div>
+              <div class="ow-flip-back" style="font-size:16px;line-height:1.65;"><strong>do (octave):</strong> The same fist as do, but held higher, up near the top of your reach. Same shape, one octave up.</div>
+            </div>
+          </div>
+          <button class="widget-reset" style="margin-top:14px;">Reset All Cards</button>
+        </div>
+    </div>
+
+    <!-- ===================== PART 4 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127932; PART 4 &middot; FIVE STEPS TO SIGHT-SING A NEW MELODY</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Before singing any new melody, follow this preparation sequence. The goal is to hear the melody in your inner ear before any sound leaves your mouth.</p>
+
+        <div class="optima-widget ow-reflect">
+          <div class="widget-kicker">&#128221; NOTEBOOK FIRST</div>
+          <div class="widget-question">In your notebook, write down the five steps for preparing to sight-sing in your own words. Use the headings and content in the process card below as your guide. Write all five steps before opening anything.</div>
+          <div class="widget-options">
+            <button data-response="Good. You have your own version of the process. Compare it to the process card below. The order matters. Keep your notes for reference during practice.">I have written my five steps.</button>
+          </div>
+          <div class="widget-feedback"></div>
+          <button class="widget-reset">Reset</button>
+        </div>
+
+        <!-- VISUAL 2: 5 Steps Process Card -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+          <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.3px;">5 STEPS TO SIGHT-SING A NEW MELODY</div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="min-width:36px; height:36px; border-radius:50%; background:#1A6B3C; color:#fff; font-size:16px; font-weight:bold; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</div>
+              <div><div style="font-size:16px; color:#0e1c42; font-weight:bold; margin-bottom:2px;">Find "do"</div><div style="font-size:16px; color:#1a2340; line-height:1.55;">Identify the key and mode. Decide if it is major or minor. Assign "do" to the tonic pitch.</div></div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="min-width:36px; height:36px; border-radius:50%; background:#1A6B3C; color:#fff; font-size:16px; font-weight:bold; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</div>
+              <div><div style="font-size:16px; color:#0e1c42; font-weight:bold; margin-bottom:2px;">Feel the beat</div><div style="font-size:16px; color:#1a2340; line-height:1.55;">Establish the tempo in your mind. Tap or conduct briefly before you sing a single note.</div></div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="min-width:36px; height:36px; border-radius:50%; background:#1A6B3C; color:#fff; font-size:16px; font-weight:bold; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</div>
+              <div><div style="font-size:16px; color:#0e1c42; font-weight:bold; margin-bottom:2px;">Scan for challenges</div><div style="font-size:16px; color:#1a2340; line-height:1.55;">Look ahead for large leaps, chromatic notes, or tricky rhythms. Plan those moments before you reach them.</div></div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="min-width:36px; height:36px; border-radius:50%; background:#1A6B3C; color:#fff; font-size:16px; font-weight:bold; display:flex; align-items:center; justify-content:center; flex-shrink:0;">4</div>
+              <div><div style="font-size:16px; color:#0e1c42; font-weight:bold; margin-bottom:2px;">Identify patterns</div><div style="font-size:16px; color:#1a2340; line-height:1.55;">Look for sequences, repeated motives, or scale runs. Recognizing patterns makes reading faster and more accurate.</div></div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+              <div style="min-width:36px; height:36px; border-radius:50%; background:#2A9D5C; color:#fff; font-size:16px; font-weight:bold; display:flex; align-items:center; justify-content:center; flex-shrink:0;">5</div>
+              <div><div style="font-size:16px; color:#0e1c42; font-weight:bold; margin-bottom:2px;">SING. Keep going.</div><div style="font-size:16px; color:#1a2340; line-height:1.55;">Maintain a steady tempo. Do not stop to fix individual wrong notes. Stopping defeats the purpose. Real sight-singing is real-time reading.</div></div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Resources -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#128279; OPEN RESOURCES FOR THIS MODULE</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://www.youtube.com/results?search_query=sight+singing+solfege+tutorial" style="color:#6B4C9A;" target="_blank">Sight-Singing Tutorial (YouTube)</a>: overview of movable-do solfege in action.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://www.youtube.com/results?search_query=curwen+kodaly+hand+signs+solfege" style="color:#6B4C9A;" target="_blank">Curwen-Kodaly Hand Signs (YouTube)</a>: watch to learn all seven hand positions.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://viva.pressbooks.pub/openmusictheory/?p=4771" style="color:#6B4C9A;" target="_blank">OMT Interactive: Sight-Singing Chapter</a> (Open Music Theory v2, free).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://musiclab.chromeexperiments.com/Melody-Maker" style="color:#6B4C9A;" target="_blank">Chrome Music Lab: Melody Maker</a>: experiment with melodic intervals and hear them instantly.</div>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Sight-Singing Ear Training (musictheory.net)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete at least 10 interval identification exercises on Easy setting at musictheory.net. Then sight-sing three short melodies from the OMT chapter and record yourself on one. Upload your screenshot and recording in Canvas.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 19 Check (Canvas quiz)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short auto-graded quiz on sight-singing, solfege syllables, and the five-step strategy. You may retake it to learn from your mistakes.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">In movable-do solfege, "do" is always the tonic. The minor modifications are: <strong>me</strong> for the lowered 3rd, <strong>le</strong> for the lowered 6th, <strong>te</strong> for the lowered 7th. When you sight-sing: find do, feel the beat, scan ahead, spot patterns, and then keep going without stopping to fix mistakes. Audiation grows with every real attempt. A little practice every day builds the skill faster than one long session.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 19.01 &middot; Solfege, Audiation, and Sight-Singing</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

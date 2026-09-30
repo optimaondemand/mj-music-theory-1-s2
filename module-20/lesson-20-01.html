@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 20.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    /* music note label chips */
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 20</div>
+        <div style="font-size: 12px; color: #666;">Rhythmic Dictation and Advanced Rhythm</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 20.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Dictation, Hemiola, and Cross-Rhythm</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 40 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 20.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Writing What You Hear: Rhythmic Dictation, Hemiola, and Cross-Rhythm</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">How do musicians write down what they hear?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You have read rhythms and performed them. Today you go in the opposite direction: you listen to rhythm and write it down. You will also learn two of the most interesting rhythmic effects in music -- hemiola and cross-rhythm. Both involve layers of rhythm that pull against each other. Once you hear them, you start noticing them everywhere.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> define rhythmic dictation and explain the step-by-step approach.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> notate rhythms from memory in both simple and compound meters.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognize and explain hemiola in musical examples.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> understand cross-rhythm and the 3-against-2 relationship.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> transcribe a short rhythmic passage by ear.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Open Music Theory v2, free at viva.pressbooks.pub/openmusictheory: read the Rhythm chapter, pp. 76-124.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Music Theory notebook, staff paper or MuseScore, and a pencil.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Headphones, for the linked rhythm and hemiola examples.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; RHYTHMIC DICTATION</div>
+
+        <div class="optima-widget ow-reflect">
+          <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+          <div class="widget-question">Think about music you know well. Has a rhythm ever surprised you -- shifted your sense of where the beat was? (No wrong answer.)</div>
+          <div class="widget-options">
+            <button data-response="That is about to change. By the end of this lesson you will have the vocabulary to name exactly what you are hearing.">Not that I have noticed yet.</button>
+            <button data-response="Good. That feeling you described -- the beat seeming to shift and then snap back -- is probably hemiola. Today you learn how it works.">Yes, something felt off and then snapped back.</button>
+            <button data-response="Excellent. You have been hearing cross-rhythms and hemiola without knowing the names. Today you get the names and the mechanics behind them.">Yes, I have felt rhythms pulling against each other.</button>
+          </div>
+          <div class="widget-feedback"></div>
+          <button class="widget-reset">Reset</button>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Rhythmic dictation</strong> is the skill of listening to a rhythm and writing it down accurately in standard notation. It is the rhythmic counterpart to pitch dictation. Together, these two skills form the core of ear training. Good rhythmic dictation ability develops your musical memory, your sense of meter, and your understanding of rhythmic notation.</p>
+
+        <!-- Dictation process card -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px 20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.3px;">RHYTHMIC DICTATION: 6-STEP PROCESS</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="background: #EFEAF6; border-left: 4px solid #6B4C9A; border-radius: 6px; padding: 12px 14px;">
+              <div style="font-size: 16px; font-weight: bold; color: #6B4C9A; margin-bottom: 4px;">Step 1</div>
+              <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Listen once without writing. Feel the meter.</div>
+            </div>
+            <div style="background: #EFEAF6; border-left: 4px solid #6B4C9A; border-radius: 6px; padding: 12px 14px;">
+              <div style="font-size: 16px; font-weight: bold; color: #6B4C9A; margin-bottom: 4px;">Step 2</div>
+              <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Listen again: tap the beat. Identify simple vs. compound meter.</div>
+            </div>
+            <div style="background: #EFEAF6; border-left: 4px solid #6B4C9A; border-radius: 6px; padding: 12px 14px;">
+              <div style="font-size: 16px; font-weight: bold; color: #6B4C9A; margin-bottom: 4px;">Step 3</div>
+              <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Listen again: focus on one measure at a time.</div>
+            </div>
+            <div style="background: #E7F4EC; border-left: 4px solid #2A9D5C; border-radius: 6px; padding: 12px 14px;">
+              <div style="font-size: 16px; font-weight: bold; color: #1A6B3C; margin-bottom: 4px;">Step 4</div>
+              <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Write measure by measure. Start from the first measure.</div>
+            </div>
+            <div style="background: #E7F4EC; border-left: 4px solid #2A9D5C; border-radius: 6px; padding: 12px 14px;">
+              <div style="font-size: 16px; font-weight: bold; color: #1A6B3C; margin-bottom: 4px;">Step 5</div>
+              <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Check: does each measure total correctly before moving on?</div>
+            </div>
+            <div style="background: #E7F4EC; border-left: 4px solid #2A9D5C; border-radius: 6px; padding: 12px 14px;">
+              <div style="font-size: 16px; font-weight: bold; color: #1A6B3C; margin-bottom: 4px;">Step 6</div>
+              <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Listen one more time: verify your notation matches what you hear.</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">Common challenges: syncopated rhythms land on normally weak beats; fast sixteenth-note patterns require careful listening; ties across barlines can look confusing even when they sound clear. With practice your ear will learn to parse these automatically.</p>
+    </div>
+
+    <!-- ===================== PART 2 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127932; PART 2 &middot; HEMIOLA</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;"><strong>Hemiola</strong> is a rhythmic device in which three groups of two beats are temporarily felt as two groups of three beats (or the reverse). The word comes from the Greek for "1.5:1 ratio." Hemiola creates a striking effect: the listener's sense of where the downbeat falls seems to shift.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The classic example: in 3/4 time, a hemiola spans <em>two measures</em>, subdividing the six beats as 2+2+2 instead of 3+3. This makes two measures of triple meter sound like one measure of duple meter. Baroque composers used hemiola frequently at cadence points -- it slows the harmonic rhythm and creates emphasis just before a final resolution. You can hear famous hemiola examples in Handel's "Hallelujah" chorus and in numerous Baroque dances.</p>
+
+        <!-- VISUAL 1: Hemiola beat-grid -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px 20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.3px;">HEMIOLA: 3+3 vs. 2+2+2 in 3/4 Time</div>
+
+          <!-- Normal 3/4 row -->
+          <div style="font-size: 15px; color: #666; margin-bottom: 6px;">Normal 3/4: two measures, six beats</div>
+          <div style="display: flex; align-items: stretch; margin-bottom: 4px; gap: 2px;">
+            <div style="background: #0E1C42; color: #fff; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px; font-weight: bold;">Beat 1</div>
+            <div style="background: #E7F4EC; color: #1A6B3C; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px;">Beat 2</div>
+            <div style="background: #E7F4EC; color: #1A6B3C; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px;">Beat 3</div>
+            <div style="background: #55C8E8; color: #0E1C42; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 0 0 4px; font-size: 15px;"></div>
+            <div style="background: #0E1C42; color: #fff; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px; font-weight: bold;">Beat 1</div>
+            <div style="background: #E7F4EC; color: #1A6B3C; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px;">Beat 2</div>
+            <div style="background: #E7F4EC; color: #1A6B3C; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px;">Beat 3</div>
+          </div>
+          <div style="font-size: 15px; color: #666; margin-bottom: 14px;">Grouping: 3+3. Two clear downbeats.</div>
+
+          <!-- Hemiola row -->
+          <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 6px; font-weight: bold;">Hemiola: same six beats, regrouped 2+2+2</div>
+          <div style="display: flex; align-items: stretch; margin-bottom: 4px; gap: 2px;">
+            <div style="background: #6B4C9A; color: #fff; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px; font-weight: bold;">Acc.</div>
+            <div style="background: #EFEAF6; color: #6B4C9A; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px;">2</div>
+            <div style="background: #6B4C9A; color: #fff; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px; font-weight: bold;">Acc.</div>
+            <div style="background: #EFEAF6; color: #6B4C9A; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 0 0 4px; font-size: 15px;"></div>
+            <div style="background: #EFEAF6; color: #6B4C9A; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px;">2</div>
+            <div style="background: #6B4C9A; color: #fff; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px; font-weight: bold;">Acc.</div>
+            <div style="background: #EFEAF6; color: #6B4C9A; border-radius: 5px; padding: 10px 6px; text-align: center; flex: 1; font-size: 15px;">2</div>
+          </div>
+          <div style="font-size: 15px; color: #666;">Grouping: 2+2+2. Three accents spread evenly across the two measures. The barline no longer marks a true downbeat change.</div>
+          <div style="font-size: 15px; color: #6B4C9A; margin-top: 8px; font-style: italic;">The listener hears three groups of two where they expected two groups of three. That is hemiola.</div>
+        </div>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 10px 0 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#128161; WHERE TO HEAR HEMIOLA</div>
+            <div style="font-size: 16px; color: #0E1C42; line-height: 1.7;">Hemiola is most common in: Baroque dances (Handel, Bach), Classical minuets, Brahms symphonies, and many folk and dance traditions. It almost always appears at a <strong>cadence point</strong> -- just before the final resolution of a phrase. Listen for it in Handel's Hallelujah chorus (link in resources).</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 3 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127932; PART 3 &middot; CROSS-RHYTHM AND POLYRHYTHM</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">A <strong>cross-rhythm</strong> occurs when two contrasting rhythmic patterns are layered simultaneously, creating tension between different metric divisions. The simplest example is <strong>3 against 2</strong>: one voice plays three notes in the same span that another voice plays two notes. This creates a characteristic "push-pull" tension.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Cross-rhythms are foundational to West African drumming traditions, Latin music (including the clave rhythm), jazz, and much contemporary classical music. <strong>Polyrhythm</strong> is the simultaneous use of two or more different metric patterns -- 3 against 2, 4 against 3, 5 against 4. The best way to experience this: pat your knee with one hand in groups of 2 while tapping your other hand in groups of 3 against the same overall pulse.</p>
+
+        <!-- VISUAL 2: 3-against-2 cross-rhythm grid -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px 20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.3px;">3 AGAINST 2: Cross-Rhythm Visual</div>
+          <div style="font-size: 15px; color: #666; margin-bottom: 8px;">Both voices share the same pulse. The six smallest units are divided differently by each hand.</div>
+
+          <!-- 6 cells header -->
+          <div style="display: flex; gap: 3px; margin-bottom: 4px;">
+            <div style="flex: 0 0 90px; font-size: 15px; color: #666;">Units:</div>
+            <div style="flex: 1; background: #E2E7F0; border-radius: 4px; padding: 4px; text-align: center; font-size: 15px; color: #0e1c42;">1</div>
+            <div style="flex: 1; background: #E2E7F0; border-radius: 4px; padding: 4px; text-align: center; font-size: 15px; color: #0e1c42;">2</div>
+            <div style="flex: 1; background: #E2E7F0; border-radius: 4px; padding: 4px; text-align: center; font-size: 15px; color: #0e1c42;">3</div>
+            <div style="flex: 1; background: #E2E7F0; border-radius: 4px; padding: 4px; text-align: center; font-size: 15px; color: #0e1c42;">4</div>
+            <div style="flex: 1; background: #E2E7F0; border-radius: 4px; padding: 4px; text-align: center; font-size: 15px; color: #0e1c42;">5</div>
+            <div style="flex: 1; background: #E2E7F0; border-radius: 4px; padding: 4px; text-align: center; font-size: 15px; color: #0e1c42;">6</div>
+          </div>
+
+          <!-- Hand 1: duple (2 notes -- on units 1 and 4) -->
+          <div style="display: flex; gap: 3px; margin-bottom: 4px; align-items: center;">
+            <div style="flex: 0 0 90px; font-size: 15px; color: #0e1c42; font-weight: bold;">Hand 1 (2 notes):</div>
+            <div style="flex: 1; background: #0E1C42; color: #fff; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; font-weight: bold;">TAP</div>
+            <div style="flex: 1; background: #E7F4EC; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; color: #aaa;">.</div>
+            <div style="flex: 1; background: #E7F4EC; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; color: #aaa;">.</div>
+            <div style="flex: 1; background: #0E1C42; color: #fff; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; font-weight: bold;">TAP</div>
+            <div style="flex: 1; background: #E7F4EC; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; color: #aaa;">.</div>
+            <div style="flex: 1; background: #E7F4EC; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; color: #aaa;">.</div>
+          </div>
+
+          <!-- Hand 2: triple (3 notes -- on units 1, 3, 5) -->
+          <div style="display: flex; gap: 3px; margin-bottom: 8px; align-items: center;">
+            <div style="flex: 0 0 90px; font-size: 15px; color: #6B4C9A; font-weight: bold;">Hand 2 (3 notes):</div>
+            <div style="flex: 1; background: #6B4C9A; color: #fff; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; font-weight: bold;">TAP</div>
+            <div style="flex: 1; background: #EFEAF6; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; color: #aaa;">.</div>
+            <div style="flex: 1; background: #6B4C9A; color: #fff; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; font-weight: bold;">TAP</div>
+            <div style="flex: 1; background: #EFEAF6; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; color: #aaa;">.</div>
+            <div style="flex: 1; background: #6B4C9A; color: #fff; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; font-weight: bold;">TAP</div>
+            <div style="flex: 1; background: #EFEAF6; border-radius: 4px; padding: 8px 4px; text-align: center; font-size: 15px; color: #aaa;">.</div>
+          </div>
+
+          <div style="font-size: 15px; color: #555; line-height: 1.6;">Hand 1 divides 6 units into 2 groups of 3. Hand 2 divides the same 6 units into 3 groups of 2. Both share unit 1 as a common landing point. The pull between them is the cross-rhythm. Try it: left hand taps on 1 and 4; right hand taps on 1, 3, and 5.</div>
+        </div>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin: 10px 0 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#128161; CROSS-RHYTHMS IN MUSIC</div>
+            <div style="font-size: 16px; color: #0E1C42; line-height: 1.7;">Cross-rhythms are most common in: West African drumming, Latin music (clave), jazz (swing feel), and 20th/21st century classical music. Musicians who understand polyrhythm have a significant advantage in all of these styles.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 4 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; PART 4 &middot; CHECK YOUR UNDERSTANDING</div>
+
+        <div class="optima-widget ow-select">
+          <div class="widget-kicker">&#9889; RHYTHM READING CHECK</div>
+          <div class="widget-question">Test your understanding. Read each question and pick the best answer.</div>
+
+          <div class="widget-row" data-correct="2" data-fb="Right. Hemiola spans two full 3/4 measures -- six beats total -- and regroups them 2+2+2 instead of 3+3." data-hint="Think: one 3/4 measure has 3 beats. Hemiola spans two measures. How many beats is that?">
+            <div class="widget-row-prompt">1. In hemiola, how many beats span the typical grouping switch in 3/4 time?</div>
+            <div class="widget-options">
+              <button data-choice="0">3 beats</button>
+              <button data-choice="1">4 beats</button>
+              <button data-choice="2">6 beats</button>
+              <button data-choice="3">8 beats</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="2" data-fb="Correct. 3-against-2 is the most common cross-rhythm. Both voices share the same pulse but divide it differently." data-hint="The name describes the ratio directly: three notes in one voice, two in the other, over the same pulse.">
+            <div class="widget-row-prompt">2. A cross-rhythm that layers 3 notes against 2 notes over the same pulse is called:</div>
+            <div class="widget-options">
+              <button data-choice="0">hemiola</button>
+              <button data-choice="1">syncopation</button>
+              <button data-choice="2">3-against-2</button>
+              <button data-choice="3">metric modulation</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="3" data-fb="Right. You always listen first without writing. Getting a feel for the meter before touching your pencil prevents guessing." data-hint="Before you can write anything, you need to know what you are listening for. What do you do before step 2?">
+            <div class="widget-row-prompt">3. Which step in rhythmic dictation comes FIRST?</div>
+            <div class="widget-options">
+              <button data-choice="0">Write measure by measure</button>
+              <button data-choice="1">Check each measure totals correctly</button>
+              <button data-choice="2">Identify subdivisions</button>
+              <button data-choice="3">Listen once without writing: feel the meter</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="2" data-fb="Correct. Baroque and Classical composers used hemiola before final cadences to create emphasis and slow the harmonic rhythm." data-hint="Think of where a phrase 'lands.' Hemiola creates emphasis just before that moment of resolution.">
+            <div class="widget-row-prompt">4. Hemiola is most commonly found at which point in a phrase?</div>
+            <div class="widget-options">
+              <button data-choice="0">the opening of the phrase</button>
+              <button data-choice="1">the development section</button>
+              <button data-choice="2">a cadence point</button>
+              <button data-choice="3">a tempo change</button>
+            </div>
+          </div>
+
+          <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ===================== PART 5 ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128221; PART 5 &middot; NOTEBOOK CHALLENGE</div>
+
+        <div class="optima-widget">
+          <div class="widget-kicker">&#127936; NOTEBOOK CHALLENGE: WRITE A HEMIOLA</div>
+          <div class="widget-question">In your notebook, write a 2-measure rhythm in 3/4 that demonstrates hemiola. Show the 2+2+2 grouping with accent marks above the beats where the new "downbeats" fall. Use any note values you want for the notes themselves -- the key is showing the three accent marks spread evenly across the two measures. When you have written your hemiola rhythm, open the example below.</div>
+          <details>
+            <summary style="cursor:pointer; color:#6B4C9A; font-size:16px; padding: 6px 0; font-weight: bold;">See a sample hemiola rhythm.</summary>
+            <div style="padding: 12px 0; font-size: 16px; color: #1a2340; line-height: 1.7;">
+              One common hemiola notation: two dotted half notes written across the barline of two 3/4 measures. Each dotted half note lasts 3 beats. The first one starts on beat 1 of measure 1. The second one starts on beat 1 of measure 2. Written this way, the accent pattern becomes 1+1+1+1+1+1 of dotted quarters, or -- more commonly -- three note attacks that span beats 1, 3, and 5 of the six-beat span (using ties or dotted notes).<br><br>
+              Another common notation: in two measures of 3/4, write three dotted quarter notes (three beats each) instead of the normal pattern of three quarter notes per measure. The dotted quarters land on beats 1, 3, and 5 of the six-beat span. Because beats 3 and 5 cut across the normal barline groupings, the listener hears three equal groups of 2 instead of two groups of 3.
+            </div>
+          </details>
+          <button class="widget-reset" onclick="this.closest('.optima-widget').querySelector('details').removeAttribute('open')">Reset</button>
+        </div>
+    </div>
+
+    <!-- Resources -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#128279; OPEN RESOURCES FOR THIS MODULE</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://www.youtube.com/results?search_query=rhythm+ear+training+dictation" style="color:#6B4C9A;" target="_blank">Rhythm Ear Training (YouTube)</a>: exercises for rhythmic dictation in simple and compound meter.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://www.youtube.com/c/12tonevideos" style="color:#6B4C9A;" target="_blank">Hemiola Explained (12tone, YouTube)</a>: a clear visual explanation of how hemiola works.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://www.youtube.com/@AdamNeely" style="color:#6B4C9A;" target="_blank">Polyrhythm Tutorial -- 3 against 2 (Adam Neely, YouTube)</a>: hands-on demonstration of cross-rhythm.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://www.youtube.com/results?search_query=handel+hallelujah+chorus+hemiola" style="color:#6B4C9A;" target="_blank">Handel's Hallelujah chorus (YouTube)</a>: listen for hemiola before cadence points.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://viva.pressbooks.pub/openmusictheory/?p=63" style="color:#6B4C9A;" target="_blank">OMT Interactive: Rhythmic Dictation chapter</a> (Open Music Theory v2, free).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: #6B4C9A; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><a href="https://musiclab.chromeexperiments.com/Rhythm" style="color:#6B4C9A;" target="_blank">Chrome Music Lab: Rhythm</a>: explore rhythmic patterns visually.</div>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Rhythmic Dictation Practice (musictheory.net)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete 10 rhythm exercises at musictheory.net (Simple, then Compound). Listen to Handel's Hallelujah chorus and mark 2-3 hemiola moments. Write the same 2-measure rhythm in both 4/4 and 6/8 in MuseScore or on staff paper. Submit screenshot, notation, and hemiola note in Canvas.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 20 Check (Canvas quiz)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short auto-graded quiz on rhythmic dictation, hemiola, and cross-rhythm.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">For rhythmic dictation: listen first, then write measure by measure, then verify. Hemiola takes two 3/4 measures (6 beats) and regroups them 2+2+2. Cross-rhythm layers two different metric divisions over the same pulse. Both hemiola and cross-rhythm create deliberate rhythmic tension. Once you can name them, you hear them everywhere.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 20.01 &middot; Dictation, Hemiola, and Cross-Rhythm</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

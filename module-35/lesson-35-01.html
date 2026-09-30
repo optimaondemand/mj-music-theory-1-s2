@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 35.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+    /* roadmap step box */
+    .roadmap-step { display:flex; align-items:flex-start; gap:14px; margin-bottom:0; }
+    .roadmap-num { min-width:36px; height:36px; border-radius:50%; background:#0E1C42; color:#fff; font-size:16px; font-weight:bold; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .roadmap-arrow { text-align:center; font-size:22px; color:#0E1C42; padding:2px 0; margin-left:18px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 35</div>
+        <div style="font-size: 12px; color: #666;">Composition Workshop</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 35.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Planning and Drafting Your Composition</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 40 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 35.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Composition Workshop: Planning and Drafting Your Original Piece</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Everything you have learned this year -- scales, keys, chords, rhythm, form, style -- goes into a single project. Where do you start?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Composition is not mysterious. It is a sequence of connected decisions, each one building on the last. This lesson gives you a concrete seven-step process you can actually follow, so that by the end you have a plan and a working draft of your 16-measure original piece. The Q4 Composition and Analysis Project starts here.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name and explain the seven steps of the compositional process.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> draft a musical motive, choose a form, plan a harmonic progression, and sketch a melody arc for my own composition.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> begin entering my draft into MuseScore so it is ready for revision and final notation.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Open Music Theory v2 at viva.pressbooks.pub/openmusictheory: look at the <em>Workbook composition projects</em> section (around p. 1108) for reference on what a composed draft includes.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">MuseScore (free download at musescore.org). Have it open before the end of the lesson so you can start entering notes.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Music Theory notebook. You will use it to plan before you enter anything into MuseScore.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1: THE ROADMAP ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; THE SEVEN-STEP COMPOSITIONAL PROCESS</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Composers do not sit down and produce a perfect finished piece from start to finish in one pass. They work through a process. The process has stages, and knowing the stages stops you from getting stuck. Here are the seven steps you will follow for your Q4 project.</p>
+
+        <!-- VISUAL: Composition Roadmap (CSS flow) -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:22px; margin: 6px 0 16px;">
+          <div style="font-size: 15px; color: #6B4C9A; text-align:center; margin-bottom:16px; font-weight:600;">THE COMPOSITION ROADMAP</div>
+          <div style="max-width:600px; margin:0 auto;">
+
+            <!-- Step 1 -->
+            <div class="roadmap-step">
+              <div class="roadmap-num">1</div>
+              <div style="flex:1; background:#E7F4EC; border:1px solid #2A9D5C; border-radius:8px; padding:12px 16px;">
+                <div style="font-size:16px; font-weight:bold; color:#1A6B3C; margin-bottom:4px;">GENERATE A MOTIVE</div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.5;">A motive is a short musical idea: 2-4 notes with a distinctive rhythm or contour. It is the seed of your whole piece. Hum something. Try it on MuseScore. Keep the one that feels right.</div>
+              </div>
+            </div>
+            <div class="roadmap-arrow">&#8595;</div>
+
+            <!-- Step 2 -->
+            <div class="roadmap-step">
+              <div class="roadmap-num" style="background:#0E1C42;">2</div>
+              <div style="flex:1; background:#EEF1F8; border:1px solid #0E1C42; border-radius:8px; padding:12px 16px;">
+                <div style="font-size:16px; font-weight:bold; color:#0E1C42; margin-bottom:4px;">CHOOSE A FORM</div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.5;">Pick a structure that organizes your 16 measures. Common choices from this year: <strong>binary (A A B B, 4 measures each)</strong> or <strong>12-bar blues (expanded to 16 with an extra phrase)</strong> or <strong>verse-chorus (8+8)</strong>. Your form is your blueprint.</div>
+              </div>
+            </div>
+            <div class="roadmap-arrow">&#8595;</div>
+
+            <!-- Step 3 -->
+            <div class="roadmap-step">
+              <div class="roadmap-num" style="background:#6B4C9A;">3</div>
+              <div style="flex:1; background:#EFEAF6; border:1px solid #6B4C9A; border-radius:8px; padding:12px 16px;">
+                <div style="font-size:16px; font-weight:bold; color:#6B4C9A; margin-bottom:4px;">PLAN THE HARMONY</div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.5;">Choose a key and write out a chord progression using Roman numerals (I, IV, V, vi...) or a chord chart. Use one of the progressions you studied this year: I-V-vi-IV, I-IV-V-I, 12-bar blues, or a jazz ii-V-I. Write the progression for each section of your form.</div>
+              </div>
+            </div>
+            <div class="roadmap-arrow">&#8595;</div>
+
+            <!-- Step 4 -->
+            <div class="roadmap-step">
+              <div class="roadmap-num" style="background:#2A9D5C;">4</div>
+              <div style="flex:1; background:#E7F4EC; border:1px solid #2A9D5C; border-radius:8px; padding:12px 16px;">
+                <div style="font-size:16px; font-weight:bold; color:#1A6B3C; margin-bottom:4px;">WRITE A MELODY</div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.5;">Write a melody that fits your harmonic plan. Use chord tones on strong beats. Add passing tones or neighbor tones between them. Aim for a shape: a rise, a peak, and a resolution. Sketch the contour in your notebook before entering notes.</div>
+              </div>
+            </div>
+            <div class="roadmap-arrow">&#8595;</div>
+
+            <!-- Step 5 -->
+            <div class="roadmap-step">
+              <div class="roadmap-num" style="background:#C0392B;">5</div>
+              <div style="flex:1; background:#FDECEC; border:1px solid #C0392B; border-radius:8px; padding:12px 16px;">
+                <div style="font-size:16px; font-weight:bold; color:#C0392B; margin-bottom:4px;">DRAFT IN MUSESCORE</div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.5;">Enter your melody and chords into MuseScore. Do not worry about perfection here. Get the pitches and rhythms down. This is a draft, not the final version.</div>
+              </div>
+            </div>
+            <div class="roadmap-arrow">&#8595;</div>
+
+            <!-- Step 6 -->
+            <div class="roadmap-step">
+              <div class="roadmap-num" style="background:#0E1C42;">6</div>
+              <div style="flex:1; background:#EEF1F8; border:1px solid #0E1C42; border-radius:8px; padding:12px 16px;">
+                <div style="font-size:16px; font-weight:bold; color:#0E1C42; margin-bottom:4px;">REVISE</div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.5;">Play it back. Ask: Does the melody have a clear shape? Do the chords support it? Is the rhythm interesting? Change what does not work. Add dynamics, articulations, or a second voice if you have time.</div>
+              </div>
+            </div>
+            <div class="roadmap-arrow">&#8595;</div>
+
+            <!-- Step 7 -->
+            <div class="roadmap-step">
+              <div class="roadmap-num" style="background:#6B4C9A;">7</div>
+              <div style="flex:1; background:#EFEAF6; border:1px solid #6B4C9A; border-radius:8px; padding:12px 16px;">
+                <div style="font-size:16px; font-weight:bold; color:#6B4C9A; margin-bottom:4px;">NOTATE CLEANLY AND EXPORT</div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.5;">Clean up your MuseScore file: correct measure layout, proper clefs, key signature, time signature, and dynamics. Export as a PDF and an MP3 (or screen-record your playback). These are what you submit.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">Notice that steps 1-4 happen on paper (or in your notebook) <em>before</em> you open MuseScore. Many students get stuck because they try to compose directly in the software. Plan first. Enter second. Revise third.</p>
+    </div>
+
+    <!-- ===================== PART 2: MELODY ARC ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 2 &middot; MELODY SHAPE: THE ARC</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">A good melody has a shape. It does not just wander. The most common and satisfying shape is an <strong>arc</strong>: the melody begins at a mid-range pitch, rises toward a high point (the <strong>climax</strong>), and then descends to resolve on the tonic or a stable tone. Think of it as tension building and then releasing.</p>
+
+        <!-- VISUAL: Melody-arc diagram -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:20px; margin: 6px 0 14px;">
+          <div style="font-size: 15px; color: #6B4C9A; text-align:center; margin-bottom:12px; font-weight:600;">THE MELODY ARC: RISE, PEAK, RESOLVE</div>
+          <svg viewBox="0 0 700 200" width="100%" style="max-width:700px; display:block; margin:0 auto;" role="img" aria-label="A curved arc diagram showing a melody contour. The melody starts at a mid-level pitch on the left, rises toward a peak labeled Climax in the upper center, then descends to resolve on the right. Below the arc, measure numbers run from 1 to 16. Labels show: Start (m.1), Rising (mm.2-6), Climax (m.8-9), Falling (mm.10-14), Resolution (m.16).">
+            <!-- x-axis = measures 1-16, y-axis = pitch height -->
+            <!-- arc path: starts mid (350), rises to peak, descends to end -->
+            <path d="M50,140 C100,140 160,130 200,115 C240,100 280,60 350,40 C420,20 460,30 500,60 C540,90 580,120 640,145" fill="none" stroke="#0E1C42" stroke-width="3"/>
+            <!-- shaded region under arc -->
+            <path d="M50,140 C100,140 160,130 200,115 C240,100 280,60 350,40 C420,20 460,30 500,60 C540,90 580,120 640,145 L640,175 L50,175 Z" fill="#EEF1F8" opacity="0.6"/>
+            <!-- climax point -->
+            <circle cx="350" cy="40" r="7" fill="#C0392B"/>
+            <text x="350" y="28" text-anchor="middle" font-size="12" fill="#C0392B" font-weight="bold">Climax</text>
+            <!-- start point -->
+            <circle cx="50" cy="140" r="6" fill="#2A9D5C"/>
+            <text x="50" y="165" text-anchor="middle" font-size="11" fill="#2A9D5C">Start</text>
+            <text x="50" y="178" text-anchor="middle" font-size="10" fill="#666">m.1</text>
+            <!-- end / resolution -->
+            <circle cx="640" cy="145" r="6" fill="#6B4C9A"/>
+            <text x="640" y="165" text-anchor="middle" font-size="11" fill="#6B4C9A">Resolve</text>
+            <text x="640" y="178" text-anchor="middle" font-size="10" fill="#666">m.16</text>
+            <!-- section labels -->
+            <text x="130" y="155" text-anchor="middle" font-size="11" fill="#1A6B3C">Rising</text>
+            <text x="130" y="167" text-anchor="middle" font-size="10" fill="#666">mm.2-6</text>
+            <text x="490" y="100" text-anchor="middle" font-size="11" fill="#0E1C42">Falling</text>
+            <text x="490" y="112" text-anchor="middle" font-size="10" fill="#666">mm.10-14</text>
+            <!-- pitch labels left axis -->
+            <text x="10" y="40" font-size="10" fill="#666">High</text>
+            <text x="10" y="145" font-size="10" fill="#666">Mid</text>
+            <!-- x-axis baseline -->
+            <line x1="40" y1="175" x2="660" y2="175" stroke="#D0D9E8" stroke-width="1"/>
+            <text x="350" y="195" text-anchor="middle" font-size="11" fill="#666">Measures 1 - 16</text>
+          </svg>
+          <div style="font-size:15px; color:#666; margin-top:8px; text-align:center;">Sketch your own arc in your notebook before entering notes. A rough contour drawing helps you keep the melody organized and moving forward.</div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The arc does not have to be perfectly smooth. Melodies can dip or jump and still follow an overall shape. What you are avoiding is a melody that starts high and stays high, or one that has no direction at all. The arc gives the listener a sense of arrival: something is going somewhere.</p>
+
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-top: 3px solid #1A6B3C; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#128161; MELODY CHECKLIST BEFORE YOU ENTER NOTES</div>
+            <ul style="font-size: 16px; color: #0E1C42; line-height: 1.85; margin: 0; padding-left: 22px;">
+                <li>Does my melody start on a chord tone (tonic, third, or fifth)?</li>
+                <li>Does it have a clear high point (climax), even if subtle?</li>
+                <li>Does it land on a stable note at the end (tonic or fifth of the key)?</li>
+                <li>Does it mostly move by step, with leaps used for emphasis?</li>
+                <li>Does it fit the rhythm of the style I chose (blues, pop, jazz, or tonal)?</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===================== PART 3: STYLE CHOICES ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127928; PART 3 &middot; WHAT STYLE WILL YOU WRITE IN?</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Your Q4 project lets you compose in any style you studied this year. Each style has its own characteristic harmony and rhythm. Choose one:</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+
+            <div style="border: 2px solid #1A6B3C; border-radius: 8px; padding: 14px; background: #E7F4EC;">
+                <div style="font-size: 16px; font-weight: bold; color: #1A6B3C; margin-bottom: 6px;">BLUES</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.5;">12-bar progression (I I I I / IV IV I I / V IV I V). Pentatonic or blues scale for melody. Characteristic blue notes (flatted 3rd and 7th). Shuffle rhythm optional.</div>
+            </div>
+
+            <div style="border: 2px solid #6B4C9A; border-radius: 8px; padding: 14px; background: #EFEAF6;">
+                <div style="font-size: 16px; font-weight: bold; color: #6B4C9A; margin-bottom: 6px;">POP</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.5;">Common progressions: I-V-vi-IV or I-IV-V-I. Diatonic melody, verse-chorus form. Clear phrase structure (4+4 or 8+8 measures).</div>
+            </div>
+
+            <div style="border: 2px solid #0E1C42; border-radius: 8px; padding: 14px; background: #EEF1F8;">
+                <div style="font-size: 16px; font-weight: bold; color: #0E1C42; margin-bottom: 6px;">JAZZ</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.5;">ii-V-I progressions. Seventh chords (Dm7 G7 Cmaj7). Swung or straight rhythms. Melody may include chromatic passing tones. AABA form (32 measures; scale to 16 by using 8-bar A).</div>
+            </div>
+
+            <div style="border: 2px solid #2A9D5C; border-radius: 8px; padding: 14px; background: #E7F4EC;">
+                <div style="font-size: 16px; font-weight: bold; color: #2A9D5C; margin-bottom: 6px;">TONAL (CLASSICAL STYLE)</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.5;">I-IV-V-I cadences, diatonic melody, binary or rounded binary form. Strong on-beat harmonic rhythm. Melody stays mostly in the scale of the key, with occasional leading-tone or neighbor notes.</div>
+            </div>
+
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">You do not need to pick the hardest style. Pick the one where you can make the most intentional decisions. A simple piece with deliberate choices is stronger than a complicated piece where you lost track of the harmony.</p>
+    </div>
+
+    <!-- ===================== WIDGET: ow-select ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 14px;">&#9889; CHECK YOUR UNDERSTANDING</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 12px 0;">In your notebook, answer each question before clicking. Then tap your answer to check.</p>
+
+        <div class="optima-widget ow-select">
+          <div class="widget-kicker">&#9889; COMPOSITION PROCESS</div>
+          <div class="widget-question">Match each situation to the correct step in the compositional process.</div>
+
+          <div class="widget-row" data-correct="1" data-fb="Correct. Step 3 is Planning the Harmony. Before writing the melody, you need to know what chords each phrase will use." data-hint="Look at the seven steps. Which step happens before the melody but after the form?">
+            <div class="widget-row-prompt">1. You write out 'I - V - vi - IV' for measures 1-8 and 'I - IV - V - I' for measures 9-16. This is step&hellip;</div>
+            <div class="widget-options">
+              <button data-choice="0">Step 2: Choose a Form</button>
+              <button data-choice="1">Step 3: Plan the Harmony</button>
+              <button data-choice="2">Step 4: Write a Melody</button>
+              <button data-choice="3">Step 6: Revise</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="3" data-fb="Correct. Entering notes into MuseScore is Step 5: Draft. Planning (steps 1-4) happens on paper first." data-hint="Entering notes into notation software is which step? Not planning, not revising.">
+            <div class="widget-row-prompt">2. You open MuseScore and start clicking in the pitches and rhythms from your notebook sketch. This is step&hellip;</div>
+            <div class="widget-options">
+              <button data-choice="0">Step 1: Generate a Motive</button>
+              <button data-choice="1">Step 3: Plan the Harmony</button>
+              <button data-choice="2">Step 4: Write a Melody</button>
+              <button data-choice="3">Step 5: Draft in MuseScore</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="0" data-fb="Correct. In jazz style, seventh chords and ii-V-I progressions are characteristic. The ii-V-I (example: Dm7 - G7 - Cmaj7) is the defining jazz harmonic move." data-hint="Which style from this year uses ii-V-I and seventh chords?">
+            <div class="widget-row-prompt">3. You plan a piece using ii-V-I progressions and seventh chords. Which style best describes this?</div>
+            <div class="widget-options">
+              <button data-choice="0">Jazz</button>
+              <button data-choice="1">Tonal (classical)</button>
+              <button data-choice="2">Blues</button>
+              <button data-choice="3">Pop</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="2" data-fb="Correct. A melody arc rises from a starting pitch toward a climax and then descends to resolve. This gives the listener a sense of arrival at the end." data-hint="The arc shape is about direction: rise, peak, and then what?">
+            <div class="widget-row-prompt">4. A good melody arc starts at a mid-range pitch, rises to a climax, and then&hellip;</div>
+            <div class="widget-options">
+              <button data-choice="0">leaps to the highest note in the piece</button>
+              <button data-choice="1">repeats the opening motive exactly</button>
+              <button data-choice="2">descends to resolve on a stable tone</button>
+              <button data-choice="3">stays on the tonic pitch for the final four measures</button>
+            </div>
+          </div>
+
+          <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ===================== WIDGET: ow-reflect ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div class="optima-widget ow-reflect" style="margin:0;">
+          <div class="widget-kicker">&#9889; QUICK CHECK-IN &middot; WHERE ARE YOU IN THE PROCESS?</div>
+          <div class="widget-question">Which step in the composition roadmap are you at right now? (No wrong answer. Just check in.)</div>
+          <div class="widget-options">
+            <button data-response="Step 1 is a great place to start. Try humming a few short rhythmic patterns. Settle on one 2-4 note idea that you like and write it in your notebook. That is your motive.">I am still at Step 1. I have not found my motive yet.</button>
+            <button data-response="You have your motive and your form. Write out your chord progression for each section now (Step 3), then sketch a melody contour before opening MuseScore.">I have a motive and a form idea, but have not planned the harmony yet.</button>
+            <button data-response="You are ready for Step 5. Open MuseScore, set up your key signature and time signature, and start entering the pitches you sketched. Do not worry about perfection in the draft.">I have planned steps 1-4 on paper and I am ready to enter into MuseScore.</button>
+            <button data-response="Excellent. Use the melody checklist from this lesson as your revision guide. Check the arc, the cadences, and whether the melody fits the chord tones on the strong beats.">I have a draft in MuseScore and I am at the revision step.</button>
+          </div>
+          <div class="widget-feedback"></div>
+          <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Q4 Composition and Analysis Project (Canvas Assignment)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Your main project for this module. See the full details in Canvas. You will compose a 16-measure original piece, provide a chord chart or Roman-numeral analysis of your own piece, write a short program note, and analyze a provided public-domain score. Submit as a MuseScore PDF + recording.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Composition Preview Discussion</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Post a short recording or screen-share of your draft piece. Classmates give specific feedback. This replaces a live presentation: all listening and responding happens asynchronously in the discussion board.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 35 Check (Canvas quiz)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short auto-graded quiz on the compositional process and melody concepts.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Composition is a process, not a talent. Follow the seven steps: <strong>motive, form, harmony, melody, draft, revise, notate.</strong> Do steps 1-4 on paper before opening MuseScore. Give your melody a shape: rise to a climax, then resolve. You already know the theory. Now you use it.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 35.01 &middot; Composition Workshop: Planning and Drafting</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

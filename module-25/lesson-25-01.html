@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Music Theory 1 &mdash; Lesson 25.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS (green/purple skin: purple frame, green correct) ===== */
+    .optima-widget { background: linear-gradient(135deg, #EFEAF6 0%, #F7F4FB 100%); border: 1px solid #D9CEEC; border-left: 5px solid #6B4C9A; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 15px; color: #6B4C9A; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 16px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D9CEEC; border-radius: 8px; padding: 8px 14px; font-size: 16px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F0FA; border-color: #8A6FBF; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #6B4C9A; padding: 10px 14px; font-size: 16px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 16px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #6B4C9A; color: #6B4C9A; border-radius: 6px; padding: 6px 12px; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #F0EAF7; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D9CEEC; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+    .flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .flip-grid { grid-template-columns: 1fr; } }
+    /* music note label chips */
+    .note-chip { display:inline-block; min-width:22px; text-align:center; background:#1A6B3C; color:#fff; border-radius:5px; padding:2px 7px; font-size:16px; margin:0 2px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J MUSIC THEORY 1</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 25</div>
+        <div style="font-size: 12px; color: #666;">Romantic Music</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 25.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Romantic Music: Beethoven &amp; Beyond</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 17px; color: #0e1c42;">About 40 min</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+<!-- ═══ END OPTIMA READ-ALOUD PLAYER ═══ -->
+
+    <!-- title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #0e1c42; margin-bottom: 6px;">LESSON 25.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Romantic Period: Beethoven and Beyond</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">What happens when composers decide that rules exist to be broken?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">By 1800, the neat, balanced world of Classical music was starting to crack open. Composers wanted more: more drama, more emotion, more color, more sheer size. The Romantic period (c. 1820-1900) is the story of what music sounds like when individual expression becomes the highest goal. Beethoven sits right at the hinge point, and understanding him is the key to understanding everything that came after.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Define the Romantic period (approximately 1820-1900) and describe its core expressive goals.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Identify key features of Romantic style: expanded orchestra, chromaticism, extreme dynamics, program music, and nationalism.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Explain Beethoven's role as a bridge between Classical and Romantic styles.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Identify at least three major Romantic composers and listen analytically to a Romantic work.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Headphones for the listening links in this lesson (all are free YouTube searches).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #BFE3CC; padding-left: 14px;"><span style="color: #1A6B3C; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Music Theory notebook for the listening response activity.</div>
+        </div>
+    </div>
+
+    <!-- ===================== PART 1: ERA OVERVIEW ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127925; PART 1 &middot; THREE ERAS AT A GLANCE</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">You have now studied the Baroque and Classical periods. The Romantic period follows directly, and it keeps growing until the tonal system itself starts to break down around 1900. The timeline below places all three eras and highlights where the Romantic period fits.</p>
+
+        <!-- VISUAL 1: Three-era timeline -->
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:20px 16px; margin:0 0 18px 0;">
+          <svg viewBox="0 0 700 160" width="100%" style="max-width:700px; display:block; margin:0 auto;" role="img" aria-label="Timeline showing Baroque 1600-1750, Classical 1750-1820, and Romantic 1820-1900. The Romantic era is highlighted in navy.">
+            <!-- baseline -->
+            <line x1="40" y1="95" x2="660" y2="95" stroke="#D0D9E8" stroke-width="2"/>
+            <!-- tick marks -->
+            <g stroke="#0E1C42" stroke-width="1.5">
+              <line x1="40"  y1="90" x2="40"  y2="100"/>
+              <line x1="220" y1="90" x2="220" y2="100"/>
+              <line x1="330" y1="90" x2="330" y2="100"/>
+              <line x1="490" y1="90" x2="490" y2="100"/>
+              <line x1="660" y1="90" x2="660" y2="100"/>
+            </g>
+            <!-- year labels -->
+            <g font-size="13" fill="#0E1C42" text-anchor="middle">
+              <text x="40"  y="115">1600</text>
+              <text x="220" y="115">1750</text>
+              <text x="330" y="115">1820</text>
+              <text x="490" y="115">1900</text>
+              <text x="660" y="115">1950</text>
+            </g>
+            <!-- Baroque bar -->
+            <rect x="40" y="60" width="180" height="30" rx="5" fill="#BFE3CC" stroke="#2A9D5C" stroke-width="1.5"/>
+            <text x="130" y="80" font-size="13" fill="#1A6B3C" text-anchor="middle" font-weight="bold">BAROQUE</text>
+            <!-- Classical bar -->
+            <rect x="220" y="60" width="110" height="30" rx="5" fill="#D9CEEC" stroke="#6B4C9A" stroke-width="1.5"/>
+            <text x="275" y="80" font-size="13" fill="#6B4C9A" text-anchor="middle" font-weight="bold">CLASSICAL</text>
+            <!-- Romantic bar - highlighted navy -->
+            <rect x="330" y="50" width="160" height="40" rx="6" fill="#0E1C42" stroke="#55C8E8" stroke-width="2"/>
+            <text x="410" y="75" font-size="14" fill="#55C8E8" text-anchor="middle" font-weight="bold">ROMANTIC</text>
+            <!-- post-1900 label -->
+            <text x="575" y="80" font-size="12" fill="#999" text-anchor="middle">20th Century</text>
+            <!-- arrow pointing to Romantic -->
+            <text x="410" y="140" font-size="12" fill="#0E1C42" text-anchor="middle">c. 1820-1900 &#9650; This module</text>
+          </svg>
+        </div>
+
+        <!-- VISUAL 2: Beethoven the Bridge -->
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Beethoven (1770-1827) is the most important transitional figure. He was trained as a Classical composer but his mature works pushed far beyond Classical norms. The diagram below shows how he connects both worlds.</p>
+        <div style="background:#FCFCFD; border:1px solid #E2E7F0; border-radius:8px; padding:16px; margin: 0 0 18px 0;">
+          <div style="display:flex; align-items:stretch; gap:0; flex-wrap:wrap; text-align:center;">
+            <div style="flex:1; min-width:160px; background:#D9CEEC; border-radius:8px 0 0 8px; padding:16px 12px;">
+              <div style="font-size:15px; color:#6B4C9A; margin-bottom:6px; letter-spacing:0.5px;">CLASSICAL ROOTS</div>
+              <div style="font-size:16px; color:#0E1C42; line-height:1.5;">Studied with Haydn<br>Balanced forms<br>Symphony No. 1-2<br>Clean harmonic language</div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:center; padding:0 4px;">
+              <svg width="36" height="36" viewBox="0 0 36 36"><polygon points="0,8 20,18 0,28" fill="#0E1C42"/><rect x="20" y="14" width="16" height="8" fill="#0E1C42"/></svg>
+            </div>
+            <div style="flex:1; min-width:160px; background:#0E1C42; border-radius:0; padding:16px 12px; border-top:3px solid #55C8E8; border-bottom:3px solid #55C8E8;">
+              <div style="font-size:15px; color:#55C8E8; margin-bottom:6px; letter-spacing:0.5px;">BEETHOVEN</div>
+              <div style="font-size:16px; color:#ffffff; line-height:1.5;">1770-1827<br>Symphony No. 3 "Eroica"<br>Moonlight Sonata<br>Ninth Symphony</div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:center; padding:0 4px;">
+              <svg width="36" height="36" viewBox="0 0 36 36"><polygon points="0,8 20,18 0,28" fill="#2A9D5C"/><rect x="20" y="14" width="16" height="8" fill="#2A9D5C"/></svg>
+            </div>
+            <div style="flex:1; min-width:160px; background:#E7F4EC; border-radius:0 8px 8px 0; padding:16px 12px; border-right:3px solid #2A9D5C;">
+              <div style="font-size:15px; color:#1A6B3C; margin-bottom:6px; letter-spacing:0.5px;">ROMANTIC ERA</div>
+              <div style="font-size:16px; color:#0E1C42; line-height:1.5;">Intense emotion<br>Large orchestra<br>Extreme dynamics<br>Program music</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Beethoven's Third Symphony ("Eroica," 1803) is often cited as the starting gun of the Romantic era. It was longer, louder, more structurally ambitious, and more emotionally raw than anything Classical composers had written. When Beethoven composed his Ninth Symphony in 1824, he was completely deaf and still producing some of the most powerful music in history.</p>
+    </div>
+
+    <!-- ===================== PART 2: ROMANTIC CHARACTERISTICS ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127929; PART 2 &middot; WHAT MAKES MUSIC "ROMANTIC"?</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 16px 0;">Six features define the Romantic sound. Read each card below carefully; you will need these distinctions for the practice activity.</p>
+
+        <!-- VISUAL 3: Six Romantic Characteristics Cards -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px;">
+          <div style="background:#E7F4EC; border-left:4px solid #2A9D5C; border-radius:8px; padding:14px 12px;">
+            <div style="font-size:15px; color:#1A6B3C; margin-bottom:6px; letter-spacing:0.4px;">LARGE FORCES</div>
+            <div style="font-size:16px; color:#0E1C42; line-height:1.55;">Expanded orchestra: tuba, piccolo, English horn added; ensembles grow to 100+ players.</div>
+          </div>
+          <div style="background:#E7F4EC; border-left:4px solid #2A9D5C; border-radius:8px; padding:14px 12px;">
+            <div style="font-size:15px; color:#1A6B3C; margin-bottom:6px; letter-spacing:0.4px;">EXTREME DYNAMICS</div>
+            <div style="font-size:16px; color:#0E1C42; line-height:1.55;">Range stretches from ppp (nearly silent) to fff (shattering). Sudden contrasts are common.</div>
+          </div>
+          <div style="background:#E7F4EC; border-left:4px solid #2A9D5C; border-radius:8px; padding:14px 12px;">
+            <div style="font-size:15px; color:#1A6B3C; margin-bottom:6px; letter-spacing:0.4px;">CHROMATICISM</div>
+            <div style="font-size:16px; color:#0E1C42; line-height:1.55;">Frequent use of notes and chords outside the key. Creates color, tension, and emotional ambiguity.</div>
+          </div>
+          <div style="background:#EFEAF6; border-left:4px solid #6B4C9A; border-radius:8px; padding:14px 12px;">
+            <div style="font-size:15px; color:#6B4C9A; margin-bottom:6px; letter-spacing:0.4px;">PROGRAM MUSIC</div>
+            <div style="font-size:16px; color:#0E1C42; line-height:1.55;">Instrumental music that tells a story or depicts a scene (Berlioz's Symphonie Fantastique describes an opium dream).</div>
+          </div>
+          <div style="background:#EFEAF6; border-left:4px solid #6B4C9A; border-radius:8px; padding:14px 12px;">
+            <div style="font-size:15px; color:#6B4C9A; margin-bottom:6px; letter-spacing:0.4px;">NATIONALISM</div>
+            <div style="font-size:16px; color:#0E1C42; line-height:1.55;">Using folk melodies and national subjects to express cultural identity. Smetana's Ma Vlast depicts Czech landscapes.</div>
+          </div>
+          <div style="background:#EFEAF6; border-left:4px solid #6B4C9A; border-radius:8px; padding:14px 12px;">
+            <div style="font-size:15px; color:#6B4C9A; margin-bottom:6px; letter-spacing:0.4px;">INDIVIDUAL EXPRESSION</div>
+            <div style="font-size:16px; color:#0E1C42; line-height:1.55;">Music as deeply personal confession. The composer's own biography and emotional life become musical material.</div>
+          </div>
+        </div>
+        <p style="font-size: 15px; color: #888; margin: 0 0 10px;">On small screens the grid stacks to one column.</p>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 18px 0 8px 0;">Key terms</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><strong>Chromaticism</strong> is the frequent use of notes outside the current key. One signature of chromaticism is the augmented second found in harmonic minor. Romantic composers used chromatic harmonies constantly, which is why their music sounds emotionally restless compared to the more settled Classical style.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><strong>Program music</strong> is instrumental music attached to a story or image. A <strong>symphonic poem</strong> (or <strong>tone poem</strong>) is a single-movement orchestral work inspired by a literary or visual subject. Richard Strauss's Don Quixote even includes a bleating woodwind figure to represent sheep.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><strong>Lieder</strong> (singular: Lied) are German art songs for solo voice and piano. Franz Schubert wrote over 600 of them and essentially invented the modern song cycle as an art form.</p>
+    </div>
+
+    <!-- ===================== PART 3: MAJOR COMPOSERS ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127932; PART 3 &middot; THE ROMANTIC COMPOSERS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Seven composers you should recognize. All of their scores are freely available at IMSLP because they are in the public domain.</p>
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:16px;">
+            <thead>
+              <tr style="background:#0E1C42; color:#fff;">
+                <th style="padding:10px 12px; text-align:left; border-radius:6px 0 0 0;">Composer</th>
+                <th style="padding:10px 12px; text-align:left;">Dates</th>
+                <th style="padding:10px 12px; text-align:left; border-radius:0 6px 0 0;">Known for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#F7F9FC;"><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;"><strong>Beethoven</strong></td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">1770-1827</td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">9 symphonies, 32 piano sonatas, "the bridge"</td></tr>
+              <tr><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;"><strong>Schubert</strong></td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">1797-1828</td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">600+ lieder, "Unfinished" Symphony</td></tr>
+              <tr style="background:#F7F9FC;"><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;"><strong>Chopin</strong></td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">1810-1849</td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">Solo piano: nocturnes, etudes, mazurkas, polonaises</td></tr>
+              <tr><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;"><strong>Schumann</strong></td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">1810-1856</td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">Piano music, songs, literary connections</td></tr>
+              <tr style="background:#F7F9FC;"><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;"><strong>Brahms</strong></td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">1833-1897</td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">4 symphonies; Classical form + Romantic emotion</td></tr>
+              <tr><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;"><strong>Wagner</strong></td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">1813-1883</td><td style="padding:9px 12px; border-bottom:1px solid #E2E7F0;">Opera as "music drama"; revolutionary harmony</td></tr>
+              <tr style="background:#F7F9FC;"><td style="padding:9px 12px;"><strong>Tchaikovsky</strong></td><td style="padding:9px 12px;">1840-1893</td><td style="padding:9px 12px;">Ballets (Swan Lake, Nutcracker), symphonies, concertos</td></tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+    <!-- ===================== PART 4: LISTENING ACTIVITY ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#127911; PART 4 &middot; LISTENING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Listen to the following recordings and take notes in your notebook. The links open YouTube search results; choose any clear performance.</p>
+        <div style="background: #E7F4EC; border-left: 5px solid #2A9D5C; border-radius: 6px; padding: 14px 20px; margin-bottom: 14px;">
+            <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 8px;">&#9654; LISTENING 1</div>
+            <div style="font-size: 17px; color: #0E1C42; margin-bottom:6px;"><strong>Beethoven, Symphony No. 5, 1st movement</strong></div>
+            <div style="font-size: 16px; color: #1a2340; line-height:1.55; margin-bottom:8px;">Listen for: the four-note opening motive (short-short-short-LONG). Count how many times it appears in the first two minutes. Note how Beethoven develops one tiny fragment into a whole movement.</div>
+            <a href="https://www.youtube.com/results?search_query=beethoven+symphony+5" target="_blank" style="display:inline-block; background:#0E1C42; color:#55C8E8; padding:8px 16px; border-radius:6px; font-size:16px; text-decoration:none;">Search on YouTube</a>
+        </div>
+        <div style="background: #EFEAF6; border-left: 5px solid #6B4C9A; border-radius: 6px; padding: 14px 20px; margin-bottom: 14px;">
+            <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 8px;">&#9654; LISTENING 2</div>
+            <div style="font-size: 17px; color: #0E1C42; margin-bottom:6px;"><strong>Chopin, Nocturne in E&flat; major, Op. 9 No. 2</strong></div>
+            <div style="font-size: 16px; color: #1a2340; line-height:1.55; margin-bottom:8px;">Listen for: the lyrical, ornate melody in the right hand; the steady arpeggiated accompaniment in the left. Write two sentences describing the emotional character. Why does this feel "Romantic"?</div>
+            <a href="https://www.youtube.com/results?search_query=chopin+nocturne+eb+major" target="_blank" style="display:inline-block; background:#0E1C42; color:#55C8E8; padding:8px 16px; border-radius:6px; font-size:16px; text-decoration:none;">Search on YouTube</a>
+        </div>
+        <p style="font-size: 16px; color: #1a2340; line-height:1.6; margin: 0;">Write your notes in your notebook before moving on to the practice activity below.</p>
+    </div>
+
+    <!-- ===================== WIDGET: OW-SELECT ===================== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 14px;">&#9889; PRACTICE &middot; ROMANTIC STYLE</div>
+        <p style="font-size: 16px; color: #1a2340; line-height:1.6; margin: 0 0 14px 0;">Review the six Romantic characteristics above, decide your answer in your head, then tap it.</p>
+
+        <div class="optima-widget ow-select">
+          <div class="widget-kicker">&#9889; IDENTIFY THE FEATURE</div>
+          <div class="widget-question">Which Romantic feature is described?</div>
+
+          <div class="widget-row" data-correct="2" data-fb="Correct. Program music is instrumental music attached to a specific story, scene, or image." data-hint="Think about music that tells a story without words. Which term covers that?">
+            <div class="widget-row-prompt">1. Berlioz wrote a symphony describing an opium dream in vivid musical detail.</div>
+            <div class="widget-options">
+              <button data-choice="0">Nationalism</button>
+              <button data-choice="1">Chromaticism</button>
+              <button data-choice="2">Program music</button>
+              <button data-choice="3">Lieder</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="0" data-fb="Correct. Chromaticism means frequently using notes and chords outside the current key for emotional color and tension." data-hint="Which term describes the use of notes outside the key?">
+            <div class="widget-row-prompt">2. A composer writes a passage that constantly introduces notes not found in the home key, creating restless tension.</div>
+            <div class="widget-options">
+              <button data-choice="0">Chromaticism</button>
+              <button data-choice="1">Program music</button>
+              <button data-choice="2">Oblique motion</button>
+              <button data-choice="3">Terraced dynamics</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="3" data-fb="Correct. Smetana's Ma Vlast ('My Homeland') depicts Czech landscapes and legends, using music to celebrate national identity." data-hint="Which feature involves using music to express a national or cultural identity?">
+            <div class="widget-row-prompt">3. Smetana wrote Ma Vlast ('My Homeland') to depict Czech landscapes and folk legends.</div>
+            <div class="widget-options">
+              <button data-choice="0">Lieder</button>
+              <button data-choice="1">Program music</button>
+              <button data-choice="2">Music drama</button>
+              <button data-choice="3">Nationalism</button>
+            </div>
+          </div>
+
+          <div class="widget-row" data-correct="1" data-fb="Correct. A Lied (plural: Lieder) is a German art song for solo voice and piano. Schubert wrote over 600 of them." data-hint="German art songs for solo voice and piano have a specific name. Think of Schubert.">
+            <div class="widget-row-prompt">4. Schubert wrote over 600 short pieces for solo voice and piano, each setting a German poem to music.</div>
+            <div class="widget-options">
+              <button data-choice="0">Symphonic poem</button>
+              <button data-choice="1">Lieder</button>
+              <button data-choice="2">Music drama</button>
+              <button data-choice="3">Sonata</button>
+            </div>
+          </div>
+
+          <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #6B4C9A; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #6B4C9A; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Romantic Listening Journal (Canvas Assignment)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Listen to one complete movement of a Romantic symphony of your choice and write a 2-paragraph listening journal. Details are in Canvas.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #6B4C9A; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 25 Check (Canvas quiz)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Auto-graded quiz on Romantic style, Beethoven, and major composers. Multiple attempts allowed.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D5C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 15px; color: #1A6B3C; margin-bottom: 12px;">&#128170; THE ONE THING TO REMEMBER</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The Romantic period (c. 1820-1900) pushed music toward intense personal expression through a larger orchestra, more extreme dynamics, frequent chromaticism, and program music. Beethoven made the crossing first: trained Classical, composed Romantic. Every composer from Schubert to Tchaikovsky continued in the direction Beethoven pointed.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J MUSIC THEORY 1 &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 25.01 &middot; Romantic Music: Beethoven &amp; Beyond</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
